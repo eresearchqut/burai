@@ -52,16 +52,11 @@ public class DesignProperty {
     private Map<String, AtomDesignProperty> atomProperties;
 
     public DesignProperty(String path) throws IOException {
-        if (path == null) {
-            throw new IllegalArgumentException("path is null.");
-        }
-
-        String path_ = path.trim();
-        if (path_.isEmpty()) {
+        if (path == null || path.isEmpty()) {
             throw new IllegalArgumentException("path is empty.");
         }
 
-        this.readFile(path_);
+        this.readFile(path);
     }
 
     public DesignProperty(Design design) {
@@ -94,16 +89,11 @@ public class DesignProperty {
     }
 
     public void storeDesign(String path) throws IOException {
-        if (path == null) {
+        if (path == null || path.isEmpty()) {
             return;
         }
 
-        String path_ = path.trim();
-        if (path_.isEmpty()) {
-            return;
-        }
-
-        this.writeFile(path_);
+        this.writeFile(path);
     }
 
     public void restoreDesign(Design design) {

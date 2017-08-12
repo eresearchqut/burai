@@ -9,6 +9,7 @@
 
 package burai.atoms.viewer;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -617,6 +618,32 @@ public class AtomsViewer extends AtomsViewerBase<Group> {
 
     public Design getDesign() {
         return this.design;
+    }
+
+    public void setDesign(Design design) {
+        if (design != null) {
+            design.copyTo(this.design);
+        }
+    }
+
+    public void setDesign(String path) {
+        if (path != null && !path.isEmpty()) {
+            this.design.readDesign(path);
+        }
+    }
+
+    public void setDesign(File file) {
+        this.setDesign(file == null ? null : file.getPath());
+    }
+
+    public void saveDesign(String path) {
+        if (path != null && !path.isEmpty()) {
+            this.design.writeDesign(path);
+        }
+    }
+
+    public void saveDesign(File file) {
+        this.saveDesign(file == null ? null : file.getPath());
     }
 
     public void addBackgroundNode(Node node) {

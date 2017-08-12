@@ -9,6 +9,7 @@
 
 package burai.atoms.design;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -17,6 +18,7 @@ import java.util.Map;
 import java.util.Set;
 
 import burai.atoms.design.property.DesignLogger;
+import burai.atoms.design.property.DesignProperty;
 import burai.atoms.element.ElementUtil;
 import javafx.scene.paint.Color;
 
@@ -416,6 +418,15 @@ public class Design {
         return nameSet.toArray(names);
     }
 
+    public void copyTo(Design design) {
+        if (design == null) {
+            return;
+        }
+
+        DesignProperty property = new DesignProperty(this);
+        property.restoreDesign(design);
+    }
+
     public void storeDesign() {
         if (this.logger == null) {
             this.logger = new DesignLogger(this);
@@ -438,5 +449,47 @@ public class Design {
         }
 
         this.logger.subRestoreProperty();
+    }
+
+    public void readDesign(String path) {
+        if (path == null) {
+            return;
+        }
+
+        String path_ = path.trim();
+        if (path_ == null || path_.isEmpty()) {
+            return;
+        }
+
+        DesignProperty property = null;
+        try {
+            property = new DesignProperty(path_);
+        } catch (IOException e) {
+            //e.printStackTrace();
+            property = null;
+        }
+
+        if (property != null) {
+            property.restoreDesign(this);
+        }
+    }
+
+    public void writeDesign(String path) {
+        if (path == null) {
+            return;
+        }
+
+        String path_ = path.trim();
+        if (path_ == null || path_.isEmpty()) {
+            return;
+        }
+
+        DesignProperty property = new DesignProperty(this);
+
+        try {
+            property.storeDesign(path_);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
