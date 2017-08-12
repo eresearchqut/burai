@@ -263,7 +263,7 @@ public class VisibleAtom extends Visible<Atom> implements AtomEventListener, Ato
             return;
         }
 
-        if (!this.isStickStyle()) {
+        if (!this.currentStick) {
             this.updateRadiusOfSphere();
         }
     }
@@ -301,7 +301,7 @@ public class VisibleAtom extends Visible<Atom> implements AtomEventListener, Ato
             return;
         }
 
-        if (this.isStickStyle()) {
+        if (this.currentStick) {
             this.updateRadiusOfSphere();
         }
     }

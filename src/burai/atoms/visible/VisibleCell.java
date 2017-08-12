@@ -60,7 +60,7 @@ public class VisibleCell extends Visible<Cell> implements CellEventListener {
 
         this.latticeCylinders = new Cylinder[12];
         for (int i = 0; i < latticeCylinders.length; i++) {
-            this.latticeCylinders[i] = new Cylinder(1.0, 1.0, CYLINDER_DIV);
+            this.latticeCylinders[i] = new Cylinder(0.1, 1.0, CYLINDER_DIV);
         }
 
         this.currentShowing = false;
@@ -268,11 +268,6 @@ public class VisibleCell extends Visible<Cell> implements CellEventListener {
                 return;
             }
 
-            if (!this.currentShowing) {
-                this.updateRadiusOfCylinders();
-                this.updateColorOfCylinders();
-            }
-
             this.updateVisibleCylinders();
         });
 
@@ -283,9 +278,7 @@ public class VisibleCell extends Visible<Cell> implements CellEventListener {
                 return;
             }
 
-            if (this.currentShowing) {
-                this.updateRadiusOfCylinders();
-            }
+            this.updateRadiusOfCylinders();
         });
 
         this.design.addOnCellColorChanged(color -> {
@@ -295,9 +288,7 @@ public class VisibleCell extends Visible<Cell> implements CellEventListener {
                 return;
             }
 
-            if (this.currentShowing) {
-                this.updateColorOfCylinders();
-            }
+            this.updateColorOfCylinders();
         });
     }
 }
