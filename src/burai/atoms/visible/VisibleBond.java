@@ -27,14 +27,17 @@ import javafx.scene.shape.Cylinder;
 
 public class VisibleBond extends Visible<Bond> implements BondEventListener, AtomDesignListener {
 
-    private static final double CYLINDER_SCALE_NORM = 0.10;
-    private static final double CYLINDER_SCALE_BOLD = 0.12;
+    private static final double CYLINDER_SCALE_NORM = VisibleAtom.BOND_SCALE;
+    private static final double CYLINDER_SCALE_BOLD = 1.2 * CYLINDER_SCALE_NORM;
+
     private static final int CYLINDER_DIV = 12;
 
     private static final double SHOWING_RADIUS_SCALE = 1.15;
 
-    private static final double RMIN = 5.0e-3;
+    private static final double RMIN = VisibleAtom.RMIN;
     private static final double RRMIN = RMIN * RMIN;
+
+    private static final Color LIGHT_COLOR = VisibleAtom.LIGHT_COLOR;
 
     private boolean boldMode;
 
@@ -162,6 +165,7 @@ public class VisibleBond extends Visible<Bond> implements BondEventListener, Ato
         if (rad1 <= 0.0) {
             rad1 = atom1.getRadius();
         }
+
         this.currentRadius1 = rad1;
 
         Atom atom2 = this.model.getAtom2();
@@ -177,6 +181,7 @@ public class VisibleBond extends Visible<Bond> implements BondEventListener, Ato
         if (rad2 <= 0.0) {
             rad2 = atom2.getRadius();
         }
+
         this.currentRadius2 = rad2;
 
         double dx = x2 - x1;
@@ -235,8 +240,13 @@ public class VisibleBond extends Visible<Bond> implements BondEventListener, Ato
             color1 = this.atomDesign1.getColor();
         }
         if (color1 == null) {
-            color1 = ElementUtil.getColor(atom1.getName());
+            if (this.boldMode) {
+                color1 = ElementUtil.getColor(atom1.getName(), LIGHT_COLOR);
+            } else {
+                color1 = ElementUtil.getColor(atom1.getName());
+            }
         }
+
         this.currentColor1 = color1;
 
         PhongMaterial material1 = new PhongMaterial();
@@ -251,8 +261,13 @@ public class VisibleBond extends Visible<Bond> implements BondEventListener, Ato
             color2 = this.atomDesign2.getColor();
         }
         if (color2 == null) {
-            color2 = ElementUtil.getColor(atom2.getName());
+            if (this.boldMode) {
+                color2 = ElementUtil.getColor(atom2.getName(), LIGHT_COLOR);
+            } else {
+                color2 = ElementUtil.getColor(atom2.getName());
+            }
         }
+
         this.currentColor2 = color2;
 
         PhongMaterial material2 = new PhongMaterial();

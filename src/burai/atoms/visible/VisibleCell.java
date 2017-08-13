@@ -28,6 +28,7 @@ public class VisibleCell extends Visible<Cell> implements CellEventListener {
 
     private static final double CYLINDER_SCALE_NORM = 0.0020;
     private static final double CYLINDER_SCALE_BOLD = 0.0080;
+
     private static final int CYLINDER_DIV = 6;
 
     private static final double WMIN = 1.0e-3;

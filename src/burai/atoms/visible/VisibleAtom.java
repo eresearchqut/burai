@@ -28,12 +28,14 @@ public class VisibleAtom extends Visible<Atom> implements AtomEventListener, Ato
     private static final String KEY_SELECTED = AtomProperty.SELECTED;
 
     private static final double RADIUS_SCALE_NORM = 0.5;
-    private static final double RADIUS_SCALE_BOLD = 0.7;
+    private static final double RADIUS_SCALE_BOLD = 1.4 * RADIUS_SCALE_NORM;
 
-    private static final double BOND_SCALE = 0.1;
+    protected static final double BOND_SCALE = 0.1;
 
-    private static final double RMIN = 5.0e-3;
+    protected static final double RMIN = 5.0e-3;
     private static final double RRMIN = RMIN * RMIN;
+
+    protected static final Color LIGHT_COLOR = Color.LIGHTGRAY;
 
     private boolean boldMode;
 
@@ -122,6 +124,7 @@ public class VisibleAtom extends Visible<Atom> implements AtomEventListener, Ato
             if (radius <= 0.0) {
                 radius = this.model.getRadius();
             }
+
             this.currentRadius = radius;
         }
 
@@ -145,8 +148,13 @@ public class VisibleAtom extends Visible<Atom> implements AtomEventListener, Ato
             diffuseColor = this.atomDesign.getColor();
         }
         if (diffuseColor == null) {
-            diffuseColor = ElementUtil.getColor(this.model.getName());
+            if (this.boldMode) {
+                diffuseColor = ElementUtil.getColor(this.model.getName(), LIGHT_COLOR);
+            } else {
+                diffuseColor = ElementUtil.getColor(this.model.getName());
+            }
         }
+
         this.currentColor = diffuseColor;
 
         PhongMaterial material = new PhongMaterial();
