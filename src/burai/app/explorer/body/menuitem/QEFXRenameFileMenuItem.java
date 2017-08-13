@@ -11,6 +11,7 @@ package burai.app.explorer.body.menuitem;
 
 import burai.app.explorer.body.QEFXExplorerBody;
 import burai.app.icon.QEFXIcon;
+import burai.app.icon.QEFXRunningIcon;
 
 public class QEFXRenameFileMenuItem extends QEFXMenuItem {
 
@@ -26,9 +27,14 @@ public class QEFXRenameFileMenuItem extends QEFXMenuItem {
         }
 
         if (body.isExplorerMode()) {
-            this.setOnAction(event -> {
-                body.renameIcon(icon);
-            });
+            if (icon instanceof QEFXRunningIcon) {
+                this.setDisable(true);
+
+            } else {
+                this.setOnAction(event -> {
+                    body.renameIcon(icon);
+                });
+            }
 
         } else if (body.isRecentlyUsedMode()) {
             this.setDisable(true);
