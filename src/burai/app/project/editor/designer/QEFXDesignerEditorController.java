@@ -557,7 +557,7 @@ public class QEFXDesignerEditorController extends QEFXAppController {
 
         } else {
             this.elemName = text;
-            this.elemButton.setStyle(null);
+            this.elemButton.setStyle("");
             AtomDesign atomDesign = this.getAtomDesign();
             this.atomColorPicker.setValue(atomDesign == null ? null : atomDesign.getColor());
             this.atomRadiusField.setText(atomDesign == null ? "" : Double.toString(atomDesign.getRadius()));
@@ -886,7 +886,7 @@ public class QEFXDesignerEditorController extends QEFXAppController {
         }
 
         if (value > 0.0) {
-            textField.setStyle(null);
+            textField.setStyle("");
         } else {
             textField.setStyle(ERROR_STYLE);
         }

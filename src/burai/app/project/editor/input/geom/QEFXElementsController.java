@@ -14,16 +14,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.TableView;
-import javafx.scene.control.Tooltip;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
 import burai.app.QEFXMainController;
 import burai.app.project.editor.input.QEFXInputModelController;
 import burai.app.project.editor.input.items.QEFXItem;
@@ -38,6 +28,16 @@ import burai.input.correcter.CutoffCorrector;
 import burai.pseudo.PseudoData;
 import burai.pseudo.PseudoLibrary;
 import burai.pseudo.PseudoPotential;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
+import javafx.scene.control.TableView;
+import javafx.scene.control.Tooltip;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 
 public class QEFXElementsController extends QEFXInputModelController {
 
@@ -416,7 +416,7 @@ public class QEFXElementsController extends QEFXInputModelController {
 
         if (this.xcFuncLabel != null) {
             if (!XCFUNC_ERROR_LABEL.equals(xcName)) {
-                xcFuncLabel.setStyle(null);
+                xcFuncLabel.setStyle("");
             } else {
                 xcFuncLabel.setStyle(XCFUNC_ERROR_STYLE);
             }
