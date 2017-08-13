@@ -11,16 +11,16 @@ package burai.app.project.viewer.save;
 
 import java.io.File;
 
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.DialogPane;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import burai.app.QEFXMain;
 import burai.app.QEFXMainController;
 import burai.app.project.QEFXProjectController;
 import burai.com.env.Environments;
 import burai.project.Project;
+import burai.run.RunningManager;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 public class SaveAction {
 
@@ -72,6 +72,11 @@ public class SaveAction {
     }
 
     public boolean saveProjectAsNew() {
+        if (RunningManager.getInstance().getNode(this.project) != null) {
+            this.showDialogProjectRunning();
+            return false;
+        }
+
         File directory = null;
 
         FileChooser fileChooser = new FileChooser();
@@ -100,17 +105,9 @@ public class SaveAction {
 
         try {
             if (directory.exists()) {
-                Alert alert = new Alert(AlertType.ERROR);
-                QEFXMain.initializeDialogOwner(alert);
-                DialogPane dialogPane = alert.getDialogPane();
-                if (dialogPane != null) {
-                    dialogPane.setHeaderText(directory.getName() + " already exists.");
-                }
-
-                alert.showAndWait();
+                this.showDialogDirectoryBeing(directory);
                 return false;
             }
-
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -158,5 +155,23 @@ public class SaveAction {
         SaveText saveText = new SaveText(this.controller);
         saveText.playDecayingAnimation();
         return true;
+    }
+
+    private void showDialogProjectRunning() {
+        Alert alert = new Alert(AlertType.ERROR);
+        QEFXMain.initializeDialogOwner(alert);
+        alert.setHeaderText("Cannot save as new project, while running.");
+        alert.showAndWait();
+    }
+
+    private void showDialogDirectoryBeing(File directory) {
+        if (directory == null) {
+            return;
+        }
+
+        Alert alert = new Alert(AlertType.ERROR);
+        QEFXMain.initializeDialogOwner(alert);
+        alert.setHeaderText(directory.getName() + " already exists.");
+        alert.showAndWait();
     }
 }
