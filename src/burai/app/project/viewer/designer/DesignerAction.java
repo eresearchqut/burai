@@ -86,9 +86,6 @@ public class DesignerAction {
         }
 
         if (designerEditor != null && this.designerViewer != null) {
-            this.controller.setDesignerMode();
-            this.controller.clearStackedsOnViewerPane();
-
             final AtomsViewer atomsViewer;
             AtomsViewerInterface atomsViewerInterface = this.controller.getAtomsViewer();
             if (atomsViewerInterface != null && atomsViewerInterface instanceof AtomsViewer) {
@@ -96,6 +93,9 @@ public class DesignerAction {
             } else {
                 atomsViewer = null;
             }
+
+            this.controller.setDesignerMode();
+            this.controller.clearStackedsOnViewerPane();
 
             if (atomsViewer != null) {
                 Design srcDesign = atomsViewer.getDesign();

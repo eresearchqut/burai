@@ -126,6 +126,24 @@ public class QEFXDesignerViewerController extends QEFXAppController {
         return this.atomsViewerPrim == null ? null : this.atomsViewerPrim.getDesign();
     }
 
+    public void setDesign(Design design, boolean both) {
+        if (design == null) {
+            return;
+        }
+
+        Design designPrim = this.atomsViewerPrim == null ? null : this.atomsViewerPrim.getDesign();
+        if (designPrim != null) {
+            design.copyTo(designPrim);
+        }
+
+        if (both) {
+            Design designDual = this.atomsViewerDual == null ? null : this.atomsViewerDual.getDesign();
+            if (designDual != null) {
+                design.copyTo(designDual);
+            }
+        }
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.setupBasePane();
