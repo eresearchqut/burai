@@ -60,9 +60,17 @@ public class DesignerAction {
     }
 
     private void initializeDesigner() {
+        final AtomsViewer atomsViewer;
+        AtomsViewerInterface atomsViewerInterface = this.controller.getAtomsViewer();
+        if (atomsViewerInterface != null && atomsViewerInterface instanceof AtomsViewer) {
+            atomsViewer = (AtomsViewer) atomsViewerInterface;
+        } else {
+            atomsViewer = null;
+        }
+
         if (this.designerViewer == null) {
             try {
-                this.designerViewer = this.createDesignerViewer();
+                this.designerViewer = this.createDesignerViewer(atomsViewer);
             } catch (IOException e) {
                 this.designerViewer = null;
                 e.printStackTrace();
@@ -72,13 +80,7 @@ public class DesignerAction {
         QEFXDesignerEditor designerEditor = null;
         if (this.designerViewer != null) {
             try {
-                designerEditor = new QEFXDesignerEditor(this.controller, this.designerViewer);
-
-                File designFile = AtomsAction.getAtomsDesignFile(this.project);
-                if (designFile != null) {
-                    designerEditor.setWritingFile(designFile);
-                }
-
+                designerEditor = this.createDesignerEditor(this.designerViewer);
             } catch (IOException e) {
                 designerEditor = null;
                 e.printStackTrace();
@@ -86,23 +88,14 @@ public class DesignerAction {
         }
 
         if (designerEditor != null && this.designerViewer != null) {
-            final AtomsViewer atomsViewer;
-            AtomsViewerInterface atomsViewerInterface = this.controller.getAtomsViewer();
-            if (atomsViewerInterface != null && atomsViewerInterface instanceof AtomsViewer) {
-                atomsViewer = (AtomsViewer) atomsViewerInterface;
-            } else {
-                atomsViewer = null;
-            }
-
-            this.controller.setDesignerMode();
-            this.controller.clearStackedsOnViewerPane();
+            this.controller.setDesignerMode(controller2 -> {
+                Design srcDesign = atomsViewer == null ? null : atomsViewer.getDesign();
+                if (srcDesign != null) {
+                    this.designerViewer.setDesign(srcDesign, false);
+                }
+            });
 
             if (atomsViewer != null) {
-                Design srcDesign = atomsViewer.getDesign();
-                if (srcDesign != null) {
-                    this.designerViewer.setDesign(srcDesign);
-                }
-
                 this.controller.setOnModeBacked(controller2 -> {
                     Design dstDesign = this.designerViewer.getDesign();
                     if (dstDesign != null) {
@@ -111,6 +104,8 @@ public class DesignerAction {
                     return true;
                 });
             }
+
+            this.controller.clearStackedsOnViewerPane();
 
             Node viewerNode = this.designerViewer.getNode();
             if (viewerNode != null) {
@@ -124,13 +119,20 @@ public class DesignerAction {
         }
     }
 
-    private QEFXDesignerViewer createDesignerViewer() throws IOException {
+    private QEFXDesignerViewer createDesignerViewer(AtomsViewer atomsViewer) throws IOException {
         Cell cell = this.project.getCell();
         if (cell == null) {
             return null;
         }
 
         QEFXDesignerViewer designerViewer = new QEFXDesignerViewer(this.controller, cell);
+
+        if (atomsViewer != null) {
+            Design srcDesign = atomsViewer.getDesign();
+            if (srcDesign != null) {
+                designerViewer.setDesign(srcDesign);
+            }
+        }
 
         final BorderPane projectPane;
         if (this.controller != null) {
@@ -151,4 +153,18 @@ public class DesignerAction {
         return designerViewer;
     }
 
+    private QEFXDesignerEditor createDesignerEditor(QEFXDesignerViewer designerViewer) throws IOException {
+        if (designerViewer == null) {
+            return null;
+        }
+
+        QEFXDesignerEditor designerEditor = new QEFXDesignerEditor(this.controller, designerViewer);
+
+        File designFile = AtomsAction.getAtomsDesignFile(this.project);
+        if (designFile != null) {
+            designerEditor.setWritingFile(designFile);
+        }
+
+        return designerEditor;
+    }
 }

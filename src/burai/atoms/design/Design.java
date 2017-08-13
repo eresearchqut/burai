@@ -462,11 +462,14 @@ public class Design {
         }
 
         DesignProperty property = null;
-        try {
-            property = new DesignProperty(path_);
-        } catch (IOException e) {
-            //e.printStackTrace();
-            property = null;
+
+        synchronized (this) {
+            try {
+                property = new DesignProperty(path_);
+            } catch (IOException e) {
+                //e.printStackTrace();
+                property = null;
+            }
         }
 
         if (property != null) {

@@ -131,16 +131,16 @@ public class QEFXDesignerViewerController extends QEFXAppController {
             return;
         }
 
-        Design designPrim = this.atomsViewerPrim == null ? null : this.atomsViewerPrim.getDesign();
-        if (designPrim != null) {
-            design.copyTo(designPrim);
+        if (both) {
+            Design designPrim = this.atomsViewerPrim == null ? null : this.atomsViewerPrim.getDesign();
+            if (designPrim != null) {
+                design.copyTo(designPrim);
+            }
         }
 
-        if (both) {
-            Design designDual = this.atomsViewerDual == null ? null : this.atomsViewerDual.getDesign();
-            if (designDual != null) {
-                design.copyTo(designDual);
-            }
+        Design designDual = this.atomsViewerDual == null ? null : this.atomsViewerDual.getDesign();
+        if (designDual != null) {
+            design.copyTo(designDual);
         }
     }
 
