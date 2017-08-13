@@ -165,6 +165,14 @@ public class DesignerAction {
             designerEditor.setWritingFile(designFile);
         }
 
+        this.project.addOnFilePathChanged(path -> {
+            File designFile_ = AtomsAction.getAtomsDesignFile(this.project);
+            if (designFile_ != null) {
+                designerEditor.setWritingFile(designFile_);
+                designerEditor.writeDesignToFile();
+            }
+        });
+
         return designerEditor;
     }
 }

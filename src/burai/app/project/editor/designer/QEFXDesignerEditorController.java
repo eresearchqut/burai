@@ -197,7 +197,7 @@ public class QEFXDesignerEditorController extends QEFXAppController {
         }
     }
 
-    private void writeDesignToFile() {
+    public void writeDesignToFile() {
         if (this.writingPath == null || this.writingPath.isEmpty()) {
             return;
         }

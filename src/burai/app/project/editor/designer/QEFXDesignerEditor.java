@@ -48,6 +48,12 @@ public class QEFXDesignerEditor extends QEFXAppComponent<QEFXDesignerEditorContr
         }
     }
 
+    public void writeDesignToFile() {
+        if (this.controller != null) {
+            this.controller.writeDesignToFile();
+        }
+    }
+
     private void setupEditorKeys(Node node, QEFXDesignerViewer viewer) {
         if (node == null) {
             return;
