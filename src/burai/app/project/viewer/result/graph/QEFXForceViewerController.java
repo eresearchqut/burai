@@ -14,18 +14,18 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.XYChart.Data;
-import javafx.scene.chart.XYChart.Series;
-import javafx.scene.paint.Color;
 import burai.app.project.QEFXProjectController;
 import burai.atoms.element.ElementUtil;
 import burai.project.property.ProjectGeometry;
 import burai.project.property.ProjectGeometryList;
 import burai.project.property.ProjectProperty;
 import burai.project.property.ProjectStatus;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.XYChart.Data;
+import javafx.scene.chart.XYChart.Series;
+import javafx.scene.paint.Color;
 
 public class QEFXForceViewerController extends QEFXGraphViewerController {
 
@@ -136,7 +136,12 @@ public class QEFXForceViewerController extends QEFXGraphViewerController {
                     element = "X";
                 }
 
-                Color color = element == null ? null : ElementUtil.getColor(element, Color.LIGHTGRAY);
+                Color refColor = Color.color(
+                        0.75 * Color.LIGHTGRAY.getRed(),
+                        0.75 * Color.LIGHTGRAY.getGreen(),
+                        0.75 * Color.LIGHTGRAY.getBlue());
+
+                Color color = element == null ? null : ElementUtil.getColor(element, refColor);
                 String strColor = color == null ? null : color.toString();
                 strColor = strColor == null ? "black" : strColor.replaceAll("0x", "#");
 

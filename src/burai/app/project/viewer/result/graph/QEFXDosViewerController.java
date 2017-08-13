@@ -12,12 +12,6 @@ package burai.app.project.viewer.result.graph;
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.application.Platform;
-import javafx.geometry.Pos;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.XYChart.Data;
-import javafx.scene.chart.XYChart.Series;
-import javafx.scene.paint.Color;
 import burai.app.project.QEFXProjectController;
 import burai.atoms.element.ElementUtil;
 import burai.com.env.Environments;
@@ -30,6 +24,12 @@ import burai.project.property.ProjectDosFactory;
 import burai.project.property.ProjectEnergies;
 import burai.project.property.ProjectProperty;
 import burai.project.property.ProjectStatus;
+import javafx.application.Platform;
+import javafx.geometry.Pos;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.XYChart.Data;
+import javafx.scene.chart.XYChart.Series;
+import javafx.scene.paint.Color;
 
 public class QEFXDosViewerController extends QEFXGraphViewerController {
 
@@ -507,7 +507,12 @@ public class QEFXDosViewerController extends QEFXGraphViewerController {
         }
 
         public String getColor() {
-            Color color = this.atomName == null ? null : ElementUtil.getColor(this.atomName, Color.LIGHTGRAY);
+            Color refColor = Color.color(
+                    0.75 * Color.LIGHTGRAY.getRed(),
+                    0.75 * Color.LIGHTGRAY.getGreen(),
+                    0.75 * Color.LIGHTGRAY.getBlue());
+
+            Color color = this.atomName == null ? null : ElementUtil.getColor(this.atomName, refColor);
             String strColor = color == null ? null : color.toString();
             strColor = strColor == null ? "black" : strColor.replaceAll("0x", "#");
             return strColor;

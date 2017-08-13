@@ -12,8 +12,8 @@ package burai.atoms.element;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javafx.scene.paint.Color;
 import burai.atoms.model.exception.IncorrectAtomNameException;
+import javafx.scene.paint.Color;
 
 public final class ElementUtil {
 
@@ -320,9 +320,9 @@ public final class ElementUtil {
         return element.getColor();
     }
 
-    public static Color getColor(String name, Color color) {
+    public static Color getColor(String name, Color lightColor) {
         Color color1 = getColor(name);
-        Color color2 = color;
+        Color color2 = lightColor;
         if (color2 == null) {
             return color1;
         }
@@ -331,13 +331,13 @@ public final class ElementUtil {
         double green1 = color1.getGreen();
         double blue1 = color1.getBlue();
 
-        final double scale = 0.75;
-        double red2 = scale * color2.getRed();
-        double green2 = scale * color2.getGreen();
-        double blue2 = scale * color2.getBlue();
+        double small = 0.001;
+        double red2 = Math.max(color2.getRed(), small);
+        double green2 = Math.max(color2.getGreen(), small);
+        double blue2 = Math.max(color2.getBlue(), small);
 
         final double step = 0.95;
-        while (red1 >= red2 && green1 >= green2 && blue1 >= blue2) {
+        while (red1 > red2 && green1 > green2 && blue1 > blue2) {
             red1 *= step;
             green1 *= step;
             blue1 *= step;
