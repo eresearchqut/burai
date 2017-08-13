@@ -337,10 +337,16 @@ public final class ElementUtil {
         double blue2 = Math.max(color2.getBlue(), small);
 
         final double step = 0.95;
+        boolean changed = false;
         while (red1 > red2 && green1 > green2 && blue1 > blue2) {
             red1 *= step;
             green1 *= step;
             blue1 *= step;
+            changed = true;
+        }
+
+        if (!changed) {
+            return color1;
         }
 
         red1 = Math.max(0.0, Math.min(red1, 1.0));
