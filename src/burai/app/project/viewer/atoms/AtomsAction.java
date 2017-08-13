@@ -9,12 +9,13 @@
 
 package burai.app.project.viewer.atoms;
 
-import javafx.scene.layout.BorderPane;
+import java.io.File;
+
 import burai.app.project.QEFXProjectController;
 import burai.atoms.model.Cell;
 import burai.atoms.viewer.AtomsViewer;
-import burai.atoms.viewer.AtomsViewerInterface;
 import burai.project.Project;
+import javafx.scene.layout.BorderPane;
 
 public class AtomsAction {
 
@@ -24,11 +25,22 @@ public class AtomsAction {
         return ATOMS_VIEWER_SIZE;
     }
 
+    private static final String ATOMS_DESIGN_FILE_NAME = ".design";
+
+    public static File getAtomsDesignFile(Project project) {
+        String directoryPath = project == null ? null : project.getDirectoryPath();
+        if (directoryPath == null || directoryPath.isEmpty()) {
+            return null;
+        }
+
+        return new File(directoryPath, ATOMS_DESIGN_FILE_NAME);
+    }
+
     private Project project;
 
     private QEFXProjectController controller;
 
-    private AtomsViewerInterface atomsViewer;
+    private AtomsViewer atomsViewer;
 
     public AtomsAction(Project project, QEFXProjectController controller) {
         if (project == null) {
@@ -66,6 +78,11 @@ public class AtomsAction {
         }
 
         this.atomsViewer = new AtomsViewer(cell, getAtomsViewerSize());
+
+        File designFile = getAtomsDesignFile(this.project);
+        if (designFile != null) {
+            this.atomsViewer.setDesign(designFile);
+        }
 
         final BorderPane projectPane;
         if (this.controller != null) {

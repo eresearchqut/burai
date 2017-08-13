@@ -9,6 +9,7 @@
 
 package burai.app.project.editor.designer;
 
+import java.io.File;
 import java.io.IOException;
 
 import burai.app.QEFXAppComponent;
@@ -34,6 +35,16 @@ public class QEFXDesignerEditor extends QEFXAppComponent<QEFXDesignerEditorContr
 
         if (viewer != null) {
             this.setupViewerKeys(viewer);
+        }
+    }
+
+    public void setWritingFile(File file) {
+        this.setWritingPath(file == null ? null : file.getPath());
+    }
+
+    public void setWritingPath(String path) {
+        if (this.controller != null) {
+            this.controller.setWritingPath(path);
         }
     }
 

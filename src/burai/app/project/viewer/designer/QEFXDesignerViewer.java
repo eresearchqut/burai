@@ -54,4 +54,15 @@ public class QEFXDesignerViewer extends QEFXAppComponent<QEFXDesignerViewerContr
         return this.controller == null ? null : this.controller.getDesign();
     }
 
+    public void setDesign(Design design) {
+        if (design == null) {
+            return;
+        }
+
+        Design design_ = this.getDesign();
+        if (design_ != null) {
+            design.copyTo(design_);
+        }
+    }
+
 }

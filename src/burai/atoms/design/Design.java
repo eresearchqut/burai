@@ -475,6 +475,10 @@ public class Design {
     }
 
     public void writeDesign(String path) {
+        this.writeDesign(path, false);
+    }
+
+    public void writeDesign(String path, boolean async) {
         if (path == null) {
             return;
         }
@@ -486,10 +490,22 @@ public class Design {
 
         DesignProperty property = new DesignProperty(this);
 
-        try {
-            property.storeDesign(path_);
-        } catch (IOException e) {
-            e.printStackTrace();
+        Runnable runnable = () -> {
+            synchronized (this) {
+                try {
+                    property.storeDesign(path_);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        if (async) {
+            Thread thread = new Thread(runnable);
+            thread.start();
+
+        } else {
+            runnable.run();
         }
     }
 }

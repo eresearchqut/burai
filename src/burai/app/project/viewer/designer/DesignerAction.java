@@ -9,11 +9,16 @@
 
 package burai.app.project.viewer.designer;
 
+import java.io.File;
 import java.io.IOException;
 
 import burai.app.project.QEFXProjectController;
 import burai.app.project.editor.designer.QEFXDesignerEditor;
+import burai.app.project.viewer.atoms.AtomsAction;
+import burai.atoms.design.Design;
 import burai.atoms.model.Cell;
+import burai.atoms.viewer.AtomsViewer;
+import burai.atoms.viewer.AtomsViewerInterface;
 import burai.project.Project;
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
@@ -68,6 +73,12 @@ public class DesignerAction {
         if (this.designerViewer != null) {
             try {
                 designerEditor = new QEFXDesignerEditor(this.controller, this.designerViewer);
+
+                File designFile = AtomsAction.getAtomsDesignFile(this.project);
+                if (designFile != null) {
+                    designerEditor.setWritingFile(designFile);
+                }
+
             } catch (IOException e) {
                 designerEditor = null;
                 e.printStackTrace();
@@ -77,6 +88,29 @@ public class DesignerAction {
         if (designerEditor != null && this.designerViewer != null) {
             this.controller.setDesignerMode();
             this.controller.clearStackedsOnViewerPane();
+
+            final AtomsViewer atomsViewer;
+            AtomsViewerInterface atomsViewerInterface = this.controller.getAtomsViewer();
+            if (atomsViewerInterface != null && atomsViewerInterface instanceof AtomsViewer) {
+                atomsViewer = (AtomsViewer) atomsViewerInterface;
+            } else {
+                atomsViewer = null;
+            }
+
+            if (atomsViewer != null) {
+                Design srcDesign = atomsViewer.getDesign();
+                if (srcDesign != null) {
+                    this.designerViewer.setDesign(srcDesign);
+                }
+
+                this.controller.setOnModeBacked(controller2 -> {
+                    Design dstDesign = this.designerViewer.getDesign();
+                    if (dstDesign != null) {
+                        atomsViewer.setDesign(dstDesign);
+                    }
+                    return true;
+                });
+            }
 
             Node viewerNode = this.designerViewer.getNode();
             if (viewerNode != null) {

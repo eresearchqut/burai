@@ -24,6 +24,7 @@ import burai.atoms.design.AtomDesign;
 import burai.atoms.design.AtomsStyle;
 import burai.atoms.design.Design;
 import burai.atoms.element.ElementUtil;
+import burai.com.fx.FXBufferedThread;
 import burai.com.graphic.ToggleGraphics;
 import burai.com.graphic.svg.SVGLibrary;
 import burai.com.graphic.svg.SVGLibrary.SVGData;
@@ -56,9 +57,15 @@ public class QEFXDesignerEditorController extends QEFXAppController {
 
     private static final String ERROR_STYLE = QEFXItem.ERROR_STYLE;
 
+    private static final long SLEEP_OF_FXBUFFER = 1000L;
+
     private QEFXDesignerViewer viewer;
 
     private Design design;
+
+    private String writingPath;
+
+    private FXBufferedThread writingThread;
 
     @FXML
     private Button undoButton;
@@ -173,6 +180,37 @@ public class QEFXDesignerEditorController extends QEFXAppController {
 
         this.viewer = viewer;
         this.design = viewer.getDesign();
+
+        this.writingPath = null;
+        this.writingThread = null;
+    }
+
+    public void setWritingPath(String writingPath) {
+        this.writingPath = writingPath;
+
+        if (this.writingPath == null || this.writingPath.isEmpty()) {
+            return;
+        }
+
+        if (this.writingThread == null) {
+            this.writingThread = new FXBufferedThread(SLEEP_OF_FXBUFFER, true);
+        }
+    }
+
+    private void writeDesignToFile() {
+        if (this.writingPath == null || this.writingPath.isEmpty()) {
+            return;
+        }
+
+        if (this.writingThread == null) {
+            return;
+        }
+
+        this.writingThread.runLater(() -> {
+            if (this.design != null) {
+                design.writeDesign(this.writingPath, true);
+            }
+        });
     }
 
     @Override
@@ -311,6 +349,7 @@ public class QEFXDesignerEditorController extends QEFXAppController {
                 if (this.design != null && atomsStyle != this.design.getAtomsStyle()) {
                     this.design.storeDesign();
                     this.design.setAtomsStyle(atomsStyle);
+                    this.writeDesignToFile();
                 }
             }
         });
@@ -335,6 +374,7 @@ public class QEFXDesignerEditorController extends QEFXAppController {
                 if (this.design != null && !color.equals(this.design.getBackColor())) {
                     this.design.storeDesign();
                     this.design.setBackColor(color);
+                    this.writeDesignToFile();
                 }
             }
         });
@@ -359,6 +399,7 @@ public class QEFXDesignerEditorController extends QEFXAppController {
                 if (this.design != null && !color.equals(this.design.getFontColor())) {
                     this.design.storeDesign();
                     this.design.setFontColor(color);
+                    this.writeDesignToFile();
                 }
             }
         });
@@ -386,6 +427,7 @@ public class QEFXDesignerEditorController extends QEFXAppController {
             if (this.design != null && showing != this.design.isShowingLegend()) {
                 this.design.storeDesign();
                 this.design.setShowingLegend(showing);
+                this.writeDesignToFile();
             }
         });
 
@@ -412,6 +454,7 @@ public class QEFXDesignerEditorController extends QEFXAppController {
             if (this.design != null && showing != this.design.isShowingAxis()) {
                 this.design.storeDesign();
                 this.design.setShowingAxis(showing);
+                this.writeDesignToFile();
             }
         });
 
@@ -542,6 +585,7 @@ public class QEFXDesignerEditorController extends QEFXAppController {
                     this.design.storeDesign();
                 }
                 atomDesign_.setColor(color);
+                this.writeDesignToFile();
             }
         });
 
@@ -586,6 +630,7 @@ public class QEFXDesignerEditorController extends QEFXAppController {
                     this.design.storeDesign();
                 }
                 atomDesign_.setRadius(value);
+                this.writeDesignToFile();
             }
         });
 
@@ -656,6 +701,7 @@ public class QEFXDesignerEditorController extends QEFXAppController {
                 if (this.design != null && value != this.design.getBondWidth()) {
                     this.design.storeDesign();
                     this.design.setBondWidth(value);
+                    this.writeDesignToFile();
                 }
             }
         });
@@ -711,6 +757,7 @@ public class QEFXDesignerEditorController extends QEFXAppController {
             if (this.design != null && showing != this.design.isShowingCell()) {
                 this.design.storeDesign();
                 this.design.setShowingCell(showing);
+                this.writeDesignToFile();
             }
         });
 
@@ -734,6 +781,7 @@ public class QEFXDesignerEditorController extends QEFXAppController {
                 if (this.design != null && !color.equals(this.design.getCellColor())) {
                     this.design.storeDesign();
                     this.design.setCellColor(color);
+                    this.writeDesignToFile();
                 }
             }
         });
@@ -768,6 +816,7 @@ public class QEFXDesignerEditorController extends QEFXAppController {
                 if (this.design != null && value != this.design.getCellWidth()) {
                     this.design.storeDesign();
                     this.design.setCellWidth(value);
+                    this.writeDesignToFile();
                 }
             }
         });
