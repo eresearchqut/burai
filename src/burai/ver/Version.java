@@ -11,7 +11,7 @@ package burai.ver;
 
 public interface Version {
 
-    public static final String VERSION = "1.2";
+    public static final String VERSION = "1.3";
 
     public static final double VERSION_NUMBER = Double.parseDouble(VERSION);
 
