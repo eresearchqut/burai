@@ -29,6 +29,7 @@ import burai.com.graphic.ToggleGraphics;
 import burai.com.graphic.svg.SVGLibrary;
 import burai.com.graphic.svg.SVGLibrary.SVGData;
 import burai.com.keys.KeyNames;
+import burai.com.math.Calculator;
 import burai.com.periodic.ElementButton;
 import burai.com.periodic.PeriodicTable;
 import javafx.fxml.FXML;
@@ -872,7 +873,7 @@ public class QEFXDesignerEditorController extends QEFXAppController {
 
         double value = -1.0;
         try {
-            value = Double.parseDouble(text);
+            value = Calculator.expr(text);
         } catch (NumberFormatException e) {
             value = -1.0;
         }
