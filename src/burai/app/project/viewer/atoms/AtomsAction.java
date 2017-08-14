@@ -28,12 +28,19 @@ public class AtomsAction {
     private static final String ATOMS_DESIGN_FILE_NAME = ".design";
 
     public static File getAtomsDesignFile(Project project) {
-        String directoryPath = project == null ? null : project.getDirectoryPath();
-        if (directoryPath == null || directoryPath.isEmpty()) {
-            return null;
+        File directory = project == null ? null : project.getDirectory();
+        if (directory != null) {
+            return new File(directory, ATOMS_DESIGN_FILE_NAME);
         }
 
-        return new File(directoryPath, ATOMS_DESIGN_FILE_NAME);
+        File rootFile = project == null ? null : project.getRootFile();
+        File rootDir = rootFile == null ? null : rootFile.getParentFile();
+        String rootName = rootFile == null ? null : rootFile.getName();
+        if (rootName != null && !rootName.isEmpty()) {
+            return new File(rootDir, "." + rootName + ATOMS_DESIGN_FILE_NAME);
+        }
+
+        return null;
     }
 
     private Project project;
