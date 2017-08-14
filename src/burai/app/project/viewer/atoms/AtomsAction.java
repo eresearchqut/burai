@@ -12,6 +12,7 @@ package burai.app.project.viewer.atoms;
 import java.io.File;
 
 import burai.app.project.QEFXProjectController;
+import burai.atoms.design.Design;
 import burai.atoms.model.Cell;
 import burai.atoms.viewer.AtomsViewer;
 import burai.project.Project;
@@ -90,6 +91,19 @@ public class AtomsAction {
         if (designFile != null) {
             this.atomsViewer.setDesign(designFile);
         }
+
+        this.project.addOnFilePathChanged(path -> {
+            File designFile_ = getAtomsDesignFile(this.project);
+            String designPath = designFile_ == null ? null : designFile_.getPath();
+            if (designPath == null || designPath.isEmpty()) {
+                return;
+            }
+
+            Design design = this.atomsViewer.getDesign();
+            if (design != null) {
+                design.writeDesign(designPath);
+            }
+        });
 
         final BorderPane projectPane;
         if (this.controller != null) {

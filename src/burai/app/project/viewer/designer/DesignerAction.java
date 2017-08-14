@@ -171,7 +171,6 @@ public class DesignerAction {
             File designFile_ = AtomsAction.getAtomsDesignFile(this.project);
             if (designFile_ != null) {
                 designerEditor.setWritingFile(designFile_);
-                designerEditor.writeDesignToFile();
             }
         });
 

@@ -48,7 +48,7 @@ public class QEFXDesignerEditor extends QEFXAppComponent<QEFXDesignerEditorContr
         }
     }
 
-    public void writeDesignToFile() {
+    private void writeDesignToFile() {
         if (this.controller != null) {
             this.controller.writeDesignToFile();
         }
