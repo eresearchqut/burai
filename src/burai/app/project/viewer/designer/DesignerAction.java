@@ -91,8 +91,10 @@ public class DesignerAction {
             this.controller.setDesignerMode(controller2 -> {
                 Design srcDesign = atomsViewer == null ? null : atomsViewer.getDesign();
                 if (srcDesign != null) {
-                    this.designerViewer.setDesign(srcDesign, false);
+                    this.designerViewer.setDesign(srcDesign, false, true);
                 }
+
+                this.designerViewer.centerAtomsViewer();
             });
 
             if (atomsViewer != null) {
@@ -130,7 +132,7 @@ public class DesignerAction {
         if (atomsViewer != null) {
             Design srcDesign = atomsViewer.getDesign();
             if (srcDesign != null) {
-                designerViewer.setDesign(srcDesign);
+                designerViewer.setDesign(srcDesign, true, true);
             }
         }
 

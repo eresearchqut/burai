@@ -54,13 +54,9 @@ public class QEFXDesignerViewer extends QEFXAppComponent<QEFXDesignerViewerContr
         return this.controller == null ? null : this.controller.getDesign();
     }
 
-    public void setDesign(Design design) {
-        this.setDesign(design, true);
-    }
-
-    public void setDesign(Design design, boolean both) {
+    public void setDesign(Design design, boolean prim, boolean dual) {
         if (this.controller != null) {
-            this.controller.setDesign(design, both);
+            this.controller.setDesign(design, prim, dual);
         }
     }
 

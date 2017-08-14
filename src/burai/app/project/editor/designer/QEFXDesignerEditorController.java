@@ -46,6 +46,9 @@ public class QEFXDesignerEditorController extends QEFXAppController {
     private static final double CTRL_GRAPHIC_SIZE = 20.0;
     private static final String CTRL_GRAPHIC_CLASS = "piclight-button";
 
+    private static final double VEC_GRAPHIC_SIZE = 20.0;
+    private static final String VEC_GRAPHIC_CLASS = "piclight-button";
+
     private static final String TOGGLE_STYLE = "-fx-base: transparent";
     private static final String TOGGLE_STYLE_YES = "toggle-graphic-on";
     private static final String TOGGLE_STYLE_NO = "toggle-graphic-off";
@@ -59,6 +62,9 @@ public class QEFXDesignerEditorController extends QEFXAppController {
     private static final String ERROR_STYLE = QEFXItem.ERROR_STYLE;
 
     private static final long SLEEP_OF_FXBUFFER = 1000L;
+
+    private static final double STEP_RADIUS = 0.1;
+    private static final double STEP_WIDTH = 0.2;
 
     private QEFXDesignerViewer viewer;
 
@@ -140,6 +146,12 @@ public class QEFXDesignerEditorController extends QEFXAppController {
     private Button atomRadiusButton;
 
     @FXML
+    private Button atomRadiusUpper;
+
+    @FXML
+    private Button atomRadiusLower;
+
+    @FXML
     private TextField bondWidthField;
 
     @FXML
@@ -147,6 +159,12 @@ public class QEFXDesignerEditorController extends QEFXAppController {
 
     @FXML
     private Button bondWidthButton;
+
+    @FXML
+    private Button bondWidthUpper;
+
+    @FXML
+    private Button bondWidthLower;
 
     @FXML
     private ToggleButton cellToggle;
@@ -171,6 +189,12 @@ public class QEFXDesignerEditorController extends QEFXAppController {
 
     @FXML
     private Button cellWidthButton;
+
+    @FXML
+    private Button cellWidthUpper;
+
+    @FXML
+    private Button cellWidthLower;
 
     public QEFXDesignerEditorController(QEFXProjectController projectController, QEFXDesignerViewer viewer) {
         super(projectController == null ? null : projectController.getMainController());
@@ -644,6 +668,36 @@ public class QEFXDesignerEditorController extends QEFXAppController {
                 }
             });
         }
+
+        if (this.atomRadiusUpper != null) {
+            this.atomRadiusUpper.setText("");
+            this.atomRadiusUpper.getStyleClass().add(VEC_GRAPHIC_CLASS);
+            this.atomRadiusUpper.setGraphic(
+                    SVGLibrary.getGraphic(SVGData.VECTOR_UP, VEC_GRAPHIC_SIZE, null, VEC_GRAPHIC_CLASS));
+
+            this.atomRadiusUpper.setOnAction(event -> {
+                if (this.atomRadiusField != null) {
+                    double value = this.getFieldValue(this.atomRadiusField);
+                    value = value > 0.0 ? (value + STEP_RADIUS) : -1.0;
+                    this.setFieldValue(this.atomRadiusField, value);
+                }
+            });
+        }
+
+        if (this.atomRadiusLower != null) {
+            this.atomRadiusLower.setText("");
+            this.atomRadiusLower.getStyleClass().add(VEC_GRAPHIC_CLASS);
+            this.atomRadiusLower.setGraphic(
+                    SVGLibrary.getGraphic(SVGData.VECTOR_DOWN, VEC_GRAPHIC_SIZE, null, VEC_GRAPHIC_CLASS));
+
+            this.atomRadiusLower.setOnAction(event -> {
+                if (this.atomRadiusField != null) {
+                    double value = this.getFieldValue(this.atomRadiusField);
+                    value = value > 0.0 ? (value - STEP_RADIUS) : -1.0;
+                    this.setFieldValue(this.atomRadiusField, value);
+                }
+            });
+        }
     }
 
     private AtomDesign getAtomDesign() {
@@ -711,6 +765,36 @@ public class QEFXDesignerEditorController extends QEFXAppController {
             QEFXItem.setupDefaultButton(this.bondWidthButton);
             this.bondWidthButton.setOnAction(event -> {
                 this.bondWidthField.setText("1.0");
+            });
+        }
+
+        if (this.bondWidthUpper != null) {
+            this.bondWidthUpper.setText("");
+            this.bondWidthUpper.getStyleClass().add(VEC_GRAPHIC_CLASS);
+            this.bondWidthUpper.setGraphic(
+                    SVGLibrary.getGraphic(SVGData.VECTOR_UP, VEC_GRAPHIC_SIZE, null, VEC_GRAPHIC_CLASS));
+
+            this.bondWidthUpper.setOnAction(event -> {
+                if (this.bondWidthField != null) {
+                    double value = this.getFieldValue(this.bondWidthField);
+                    value = value > 0.0 ? (value + STEP_WIDTH) : -1.0;
+                    this.setFieldValue(this.bondWidthField, value);
+                }
+            });
+        }
+
+        if (this.bondWidthLower != null) {
+            this.bondWidthLower.setText("");
+            this.bondWidthLower.getStyleClass().add(VEC_GRAPHIC_CLASS);
+            this.bondWidthLower.setGraphic(
+                    SVGLibrary.getGraphic(SVGData.VECTOR_DOWN, VEC_GRAPHIC_SIZE, null, VEC_GRAPHIC_CLASS));
+
+            this.bondWidthLower.setOnAction(event -> {
+                if (this.bondWidthField != null) {
+                    double value = this.getFieldValue(this.bondWidthField);
+                    value = value > 0.0 ? (value - STEP_WIDTH) : -1.0;
+                    this.setFieldValue(this.bondWidthField, value);
+                }
             });
         }
     }
@@ -828,6 +912,36 @@ public class QEFXDesignerEditorController extends QEFXAppController {
                 this.cellWidthField.setText("1.0");
             });
         }
+
+        if (this.cellWidthUpper != null) {
+            this.cellWidthUpper.setText("");
+            this.cellWidthUpper.getStyleClass().add(VEC_GRAPHIC_CLASS);
+            this.cellWidthUpper.setGraphic(
+                    SVGLibrary.getGraphic(SVGData.VECTOR_UP, VEC_GRAPHIC_SIZE, null, VEC_GRAPHIC_CLASS));
+
+            this.cellWidthUpper.setOnAction(event -> {
+                if (this.cellWidthField != null) {
+                    double value = this.getFieldValue(this.cellWidthField);
+                    value = value > 0.0 ? (value + STEP_WIDTH) : -1.0;
+                    this.setFieldValue(this.cellWidthField, value);
+                }
+            });
+        }
+
+        if (this.cellWidthLower != null) {
+            this.cellWidthLower.setText("");
+            this.cellWidthLower.getStyleClass().add(VEC_GRAPHIC_CLASS);
+            this.cellWidthLower.setGraphic(
+                    SVGLibrary.getGraphic(SVGData.VECTOR_DOWN, VEC_GRAPHIC_SIZE, null, VEC_GRAPHIC_CLASS));
+
+            this.cellWidthLower.setOnAction(event -> {
+                if (this.cellWidthField != null) {
+                    double value = this.getFieldValue(this.cellWidthField);
+                    value = value > 0.0 ? (value - STEP_WIDTH) : -1.0;
+                    this.setFieldValue(this.cellWidthField, value);
+                }
+            });
+        }
     }
 
     private void disableCellItems(boolean disable) {
@@ -879,6 +993,20 @@ public class QEFXDesignerEditorController extends QEFXAppController {
         }
 
         return value;
+    }
+
+    private void setFieldValue(TextField textField, double value) {
+        if (textField == null) {
+            return;
+        }
+
+        if (value <= 0.0) {
+            return;
+        }
+
+        final double denom = 1.0e+8;
+        long longValue = Math.round(value * denom);
+        textField.setText(Double.toString(((double) longValue) / denom));
     }
 
     private void setFieldStyle(TextField textField, double value) {

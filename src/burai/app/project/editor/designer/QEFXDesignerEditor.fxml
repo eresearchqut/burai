@@ -154,10 +154,17 @@
                   <ColorPicker fx:id="atomColorPicker" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <GridPane prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <children>
-                        <TextField fx:id="atomRadiusField" prefWidth="200.0" />
+                        <TextField fx:id="atomRadiusField" prefWidth="137.0">
+                           <GridPane.margin>
+                              <Insets right="3.0" />
+                           </GridPane.margin></TextField>
+                        <Button fx:id="atomRadiusUpper" mnemonicParsing="false" text="\@" GridPane.columnIndex="1" />
+                        <Button fx:id="atomRadiusLower" mnemonicParsing="false" text="\@" GridPane.columnIndex="2" />
                      </children>
                      <columnConstraints>
-                        <ColumnConstraints prefWidth="200.0" />
+                        <ColumnConstraints prefWidth="140.0" />
+                        <ColumnConstraints prefWidth="30.0" />
+                        <ColumnConstraints prefWidth="30.0" />
                      </columnConstraints>
                      <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -203,14 +210,24 @@
                   <Label fx:id="bondWidthLabel" text="Bond Width" />
                   <GridPane prefWidth="200.0" GridPane.columnIndex="1">
                      <children>
-                        <TextField fx:id="bondWidthField" prefWidth="200.0" />
+                        <TextField fx:id="bondWidthField" prefWidth="137.0">
+                           <GridPane.margin>
+                              <Insets right="3.0" />
+                           </GridPane.margin></TextField>
+                        <Button fx:id="bondWidthUpper" mnemonicParsing="false" text="\@" GridPane.columnIndex="1" />
+                        <Button fx:id="bondWidthLower" mnemonicParsing="false" text="\@" GridPane.columnIndex="2" />
                      </children>
                      <columnConstraints>
-                        <ColumnConstraints prefWidth="200.0" />
+                        <ColumnConstraints prefWidth="140.0" />
+                        <ColumnConstraints prefWidth="30.0" />
+                        <ColumnConstraints prefWidth="30.0" />
                      </columnConstraints>
                      <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
                   </GridPane>
                   <Button fx:id="bondWidthButton" mnemonicParsing="false" text="\@" GridPane.columnIndex="2" />
                </children>
@@ -253,10 +270,17 @@
                   <ColorPicker fx:id="cellColorPicker" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <GridPane prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <children>
-                        <TextField fx:id="cellWidthField" prefWidth="200.0" />
+                        <TextField fx:id="cellWidthField" prefWidth="137.0">
+                           <GridPane.margin>
+                              <Insets right="3.0" />
+                           </GridPane.margin></TextField>
+                        <Button fx:id="cellWidthUpper" mnemonicParsing="false" text="\@" GridPane.columnIndex="1" />
+                        <Button fx:id="cellWidthLower" mnemonicParsing="false" text="\@" GridPane.columnIndex="2" />
                      </children>
                      <columnConstraints>
-                        <ColumnConstraints prefWidth="200.0" />
+                        <ColumnConstraints prefWidth="140.0" />
+                        <ColumnConstraints prefWidth="30.0" />
+                        <ColumnConstraints prefWidth="30.0" />
                      </columnConstraints>
                      <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
