@@ -14,8 +14,11 @@ import java.io.IOException;
 import burai.app.project.QEFXProjectController;
 import burai.app.project.editor.result.movie.QEFXMovieEditor;
 import burai.app.project.viewer.result.QEFXResultButton;
+import burai.atoms.design.Design;
 import burai.atoms.model.Cell;
 import burai.atoms.model.property.CellProperty;
+import burai.atoms.viewer.AtomsViewer;
+import burai.atoms.viewer.AtomsViewerInterface;
 import burai.com.consts.Constants;
 import burai.com.math.Matrix3D;
 import burai.project.Project;
@@ -30,6 +33,8 @@ public abstract class QEFXMovieButton extends QEFXResultButton<QEFXMovieViewer, 
     private Project project;
 
     private ProjectProperty projectProperty;
+
+    private Design design;
 
     protected QEFXMovieButton(QEFXProjectController projectController,
             Project project, ProjectProperty projectProperty, String title, String subTitle, boolean mdMode) {
@@ -47,6 +52,20 @@ public abstract class QEFXMovieButton extends QEFXResultButton<QEFXMovieViewer, 
         this.project = project;
         this.projectProperty = projectProperty;
         this.mdMode = mdMode;
+        this.design = this.createDesign();
+    }
+
+    private Design createDesign() {
+        if (this.projectController == null) {
+            return null;
+        }
+
+        AtomsViewerInterface atomsViewer = this.projectController.getAtomsViewer();
+        if (atomsViewer != null && atomsViewer instanceof AtomsViewer) {
+            return ((AtomsViewer) atomsViewer).getDesign();
+        }
+
+        return null;
     }
 
     @Override
@@ -104,7 +123,14 @@ public abstract class QEFXMovieButton extends QEFXResultButton<QEFXMovieViewer, 
             return null;
         }
 
-        return new QEFXMovieViewer(this.projectController, this.projectProperty, cell, this.mdMode);
+        QEFXMovieViewer movieViewer = new QEFXMovieViewer(
+                this.projectController, this.projectProperty, cell, this.mdMode);
+
+        if (this.design != null) {
+            movieViewer.setDesign(this.design);
+        }
+
+        return movieViewer;
     }
 
     @Override
