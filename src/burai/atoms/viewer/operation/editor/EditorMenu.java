@@ -13,12 +13,14 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
-import javafx.scene.input.MouseEvent;
+import burai.atoms.model.Atom;
+import burai.atoms.model.property.AtomProperty;
 import burai.atoms.viewer.AtomsViewer;
 import burai.atoms.viewer.operation.ViewerEventManager;
 import burai.atoms.visible.VisibleAtom;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
+import javafx.scene.input.MouseEvent;
 
 public class EditorMenu {
 
@@ -128,6 +130,68 @@ public class EditorMenu {
         return true;
     }
 
+    private boolean areAnySelectedAtomsMobile() {
+        AtomsViewer atomsViewer = this.manager.getAtomsViewer();
+        if (atomsViewer == null) {
+            return false;
+        }
+
+        List<VisibleAtom> visibleAtoms = atomsViewer.getVisibleAtoms();
+        if (visibleAtoms == null) {
+            return false;
+        }
+
+        for (VisibleAtom visibleAtom : visibleAtoms) {
+            Atom atom = visibleAtom.isSelected() ? visibleAtom.getModel() : null;
+            if (atom == null) {
+                continue;
+            }
+
+            if (!atom.booleanProperty(AtomProperty.FIXED_X)) {
+                return true;
+            }
+            if (!atom.booleanProperty(AtomProperty.FIXED_Y)) {
+                return true;
+            }
+            if (!atom.booleanProperty(AtomProperty.FIXED_Z)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private boolean areAnySelectedAtomsFixed() {
+        AtomsViewer atomsViewer = this.manager.getAtomsViewer();
+        if (atomsViewer == null) {
+            return false;
+        }
+
+        List<VisibleAtom> visibleAtoms = atomsViewer.getVisibleAtoms();
+        if (visibleAtoms == null) {
+            return false;
+        }
+
+        for (VisibleAtom visibleAtom : visibleAtoms) {
+            Atom atom = visibleAtom.isSelected() ? visibleAtom.getModel() : null;
+            if (atom == null) {
+                continue;
+            }
+
+            if (atom.booleanProperty(AtomProperty.FIXED_X)) {
+                return true;
+            }
+            if (atom.booleanProperty(AtomProperty.FIXED_Y)) {
+                return true;
+            }
+            if (atom.booleanProperty(AtomProperty.FIXED_Z)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public void show(MouseEvent event) {
         if (event == null) {
             return;
@@ -160,10 +224,10 @@ public class EditorMenu {
                 item.setDisable(!anyAreSelected);
 
             } else if (item instanceof BeMobileMenuItem) {
-                item.setDisable(!anyAreSelected);
+                item.setDisable(!(anyAreSelected && this.areAnySelectedAtomsFixed()));
 
             } else if (item instanceof BeFixedMenuItem) {
-                item.setDisable(!anyAreSelected);
+                item.setDisable(!(anyAreSelected && this.areAnySelectedAtomsMobile()));
 
             } else if (item instanceof SelectAllMenuItem) {
                 item.setDisable(allAreSelected);
