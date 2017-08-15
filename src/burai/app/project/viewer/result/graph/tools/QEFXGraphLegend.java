@@ -9,14 +9,14 @@
 
 package burai.app.project.viewer.result.graph.tools;
 
+import burai.app.project.viewer.result.graph.GraphProperty;
+import burai.app.project.viewer.result.graph.SeriesProperty;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Line;
-import burai.app.project.viewer.result.graph.GraphProperty;
-import burai.app.project.viewer.result.graph.SeriesProperty;
 
 public class QEFXGraphLegend {
 
@@ -51,6 +51,14 @@ public class QEFXGraphLegend {
 
     public void reload() {
         this.basePane.getChildren().clear();
+
+        String background = this.property.getBackground();
+        background = background == null ? null : background.trim();
+        if (background != null && (!background.isEmpty())) {
+            if (this.basePane != null) {
+                this.basePane.setStyle("-fx-background-color:" + background);
+            }
+        }
 
         int numSeries = this.property.numSeries();
         for (int iSeries = 0; iSeries < numSeries; iSeries++) {
