@@ -10,6 +10,7 @@
 /* Chart */
 
 .chart {
+    -fx-base: black;
     -fx-legend-visible: false;
     -fx-legend-side: bottom;
     -fx-title-side: top;

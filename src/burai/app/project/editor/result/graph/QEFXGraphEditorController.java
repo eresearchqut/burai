@@ -9,6 +9,13 @@
 
 package burai.app.project.editor.result.graph;
 
+import burai.app.project.QEFXProjectController;
+import burai.app.project.editor.result.QEFXResultEditorController;
+import burai.app.project.viewer.result.graph.GraphProperty;
+import burai.app.project.viewer.result.graph.QEFXGraphViewerController;
+import burai.app.project.viewer.result.graph.SeriesProperty;
+import burai.com.graphic.ToggleGraphics;
+import burai.com.math.Calculator;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.ColorPicker;
@@ -20,13 +27,6 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-import burai.app.project.QEFXProjectController;
-import burai.app.project.editor.result.QEFXResultEditorController;
-import burai.app.project.viewer.result.graph.GraphProperty;
-import burai.app.project.viewer.result.graph.QEFXGraphViewerController;
-import burai.app.project.viewer.result.graph.SeriesProperty;
-import burai.com.graphic.ToggleGraphics;
-import burai.com.math.Calculator;
 
 public class QEFXGraphEditorController extends QEFXResultEditorController<QEFXGraphViewerController> {
 
@@ -70,6 +70,9 @@ public class QEFXGraphEditorController extends QEFXResultEditorController<QEFXGr
     private TextField yTickField;
 
     @FXML
+    private ColorPicker backPicker;
+
+    @FXML
     private ComboBox<SeriesProperty> seriesCombo;
 
     @FXML
@@ -84,7 +87,8 @@ public class QEFXGraphEditorController extends QEFXResultEditorController<QEFXGr
     @FXML
     private ComboBox<Integer> typeCombo;
 
-    public QEFXGraphEditorController(QEFXProjectController projectController, QEFXGraphViewerController viewerController) {
+    public QEFXGraphEditorController(QEFXProjectController projectController,
+            QEFXGraphViewerController viewerController) {
         super(projectController, viewerController);
 
         this.property = null;
@@ -101,6 +105,7 @@ public class QEFXGraphEditorController extends QEFXResultEditorController<QEFXGr
         this.refreshTitleField();
         this.refreshXField();
         this.refreshYField();
+        this.refreshBackPicker();
         this.refreshSeriesCombo();
         this.refreshColorPicker();
         this.refreshSymbolToggle();
@@ -113,6 +118,7 @@ public class QEFXGraphEditorController extends QEFXResultEditorController<QEFXGr
         this.setupTitleField();
         this.setupXField();
         this.setupYField();
+        this.setupBackPicker();
         this.setupSeriesCombo();
         this.setupColorPicker();
         this.setupSymbolToggle();
@@ -411,6 +417,42 @@ public class QEFXGraphEditorController extends QEFXResultEditorController<QEFXGr
         } else {
             return false;
         }
+    }
+
+    private void refreshBackPicker() {
+        if (this.backPicker == null) {
+            return;
+        }
+
+        String strColor = this.property == null ? null : this.property.getBackground();
+        if (strColor != null && (!strColor.trim().isEmpty())) {
+            try {
+                this.backPicker.setValue(Color.valueOf(strColor));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void setupBackPicker() {
+        if (this.backPicker == null) {
+            return;
+        }
+
+        this.backPicker.setOnAction(event -> {
+            Color color = this.backPicker.getValue();
+            String strColor = color == null ? null : color.toString();
+            strColor = strColor == null ? null : strColor.replaceAll("0x", "#");
+            if (strColor != null) {
+                if (this.property != null) {
+                    this.property.setBackground(strColor);
+                }
+            }
+
+            if (this.viewerController != null) {
+                this.viewerController.reloadProperty();
+            }
+        });
     }
 
     private void refreshSeriesCombo() {

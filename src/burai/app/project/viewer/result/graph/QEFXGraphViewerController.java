@@ -304,6 +304,14 @@ public abstract class QEFXGraphViewerController extends QEFXResultViewerControll
             }
         }
 
+        String background = property.getBackground();
+        background = background == null ? null : background.trim();
+        if (background != null && (!background.isEmpty())) {
+            if (this.basePane != null) {
+                this.basePane.setStyle("-fx-background-color:" + background);
+            }
+        }
+
         int numSeries = property.numSeries();
         for (int i = 0; i < numSeries; i++) {
             SeriesProperty seriesProperty = property.getSeries(i);
@@ -327,7 +335,7 @@ public abstract class QEFXGraphViewerController extends QEFXResultViewerControll
                 color = color == null ? null : color.trim();
                 String styleColor = null;
                 if (color != null && (!color.isEmpty())) {
-                    styleColor = "-fx-stroke:" + color.trim();
+                    styleColor = "-fx-stroke:" + color;
                 }
 
                 double width = seriesProperty.getWidth();

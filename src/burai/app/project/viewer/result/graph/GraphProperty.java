@@ -54,6 +54,8 @@ public class GraphProperty {
 
     private double yTick;
 
+    private String background;
+
     private List<SeriesProperty> seriesList;
 
     private Map<String, Boolean> noteMap;
@@ -72,6 +74,7 @@ public class GraphProperty {
         this.yLower = 0.0;
         this.yUpper = 0.0;
         this.yTick = -1.0;
+        this.background = "lightgray";
         this.seriesList = null;
         this.noteMap = null;
     }
@@ -170,6 +173,14 @@ public class GraphProperty {
 
     public void setYTick(double yTick) {
         this.yTick = yTick;
+    }
+
+    public String getBackground() {
+        return this.background;
+    }
+
+    public void setBackground(String background) {
+        this.background = background;
     }
 
     public int numSeries() {
@@ -282,6 +293,7 @@ public class GraphProperty {
             this.yLower = obj.yLower;
             this.yUpper = obj.yUpper;
             this.yTick = obj.yTick;
+            this.background = obj.background;
 
             if (this.seriesList != null && obj.seriesList != null) {
                 int numSeries = Math.min(this.seriesList.size(), obj.seriesList.size());

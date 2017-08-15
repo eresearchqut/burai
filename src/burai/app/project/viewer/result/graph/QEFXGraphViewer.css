@@ -10,6 +10,7 @@
 /* Chart */
 
 .chart {
+    -fx-base: derive(black, 10.0%);
     -fx-legend-visible: false;
     -fx-legend-side: bottom;
     -fx-title-side: top;
