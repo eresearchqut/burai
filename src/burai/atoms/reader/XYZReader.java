@@ -120,12 +120,38 @@ public class XYZReader extends AtomsReader {
     }
 
     private double[][] parseLatticeVector(String line) {
-        int index = line.indexOf(':');
-        if (index < 0 || index >= (line.length() - 1)) {
+        if (line == null || line.isEmpty()) {
             return null;
         }
 
-        String line2 = line.substring(index + 1).trim();
+        int index = -1;
+        char[] splitChars = { '=', ':', '\'', '"', '[', '(', '{' };
+        for (char c : splitChars) {
+            index = line.indexOf(c);
+            if (index > -1) {
+                break;
+            }
+        }
+
+        if (index < 0) {
+            return null;
+        }
+
+        line = line.replace('\'', ' ');
+        line = line.replace('"', ' ');
+        line = line.replace('[', ' ');
+        line = line.replace(']', ' ');
+        line = line.replace('(', ' ');
+        line = line.replace(')', ' ');
+        line = line.replace('{', ' ');
+        line = line.replace('}', ' ');
+
+        String line2 = line.substring(index + 1);
+        line2 = line2 == null ? null : line2.trim();
+        if (line2 == null || line2.isEmpty()) {
+            return null;
+        }
+
         String[] subLines = line2.split("[\\s,]+");
         if (subLines == null || subLines.length < 9) {
             return null;
