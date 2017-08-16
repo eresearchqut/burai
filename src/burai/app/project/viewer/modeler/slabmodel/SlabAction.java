@@ -12,20 +12,21 @@ package burai.app.project.viewer.modeler.slabmodel;
 import java.io.IOException;
 import java.util.Optional;
 
+import burai.app.QEFXMain;
+import burai.app.project.QEFXProjectController;
+import burai.app.project.editor.modeler.slabmodel.QEFXSlabEditor;
+import burai.app.project.viewer.atoms.AtomsAction;
+import burai.app.project.viewer.modeler.ModelerIcon;
+import burai.atoms.design.Design;
+import burai.atoms.model.Cell;
+import burai.atoms.viewer.AtomsViewer;
+import burai.atoms.viewer.AtomsViewerInterface;
 import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.BorderPane;
-import burai.app.QEFXMain;
-import burai.app.project.QEFXProjectController;
-import burai.app.project.editor.modeler.slabmodel.QEFXSlabEditor;
-import burai.app.project.viewer.atoms.AtomsAction;
-import burai.app.project.viewer.modeler.ModelerIcon;
-import burai.atoms.model.Cell;
-import burai.atoms.viewer.AtomsViewer;
-import burai.atoms.viewer.AtomsViewerInterface;
 
 public class SlabAction {
 
@@ -74,6 +75,14 @@ public class SlabAction {
     }
 
     private void initializeSlabModeler(SlabModel[] slabModels) {
+        final AtomsViewer srcAtomsViewer;
+        AtomsViewerInterface srcAtomsViewerInterface = this.controller.getAtomsViewer();
+        if (srcAtomsViewerInterface != null && srcAtomsViewerInterface instanceof AtomsViewer) {
+            srcAtomsViewer = (AtomsViewer) srcAtomsViewerInterface;
+        } else {
+            srcAtomsViewer = null;
+        }
+
         if (this.slabModeler == null) {
             this.slabModeler = new SlabModeler(this.cell);
         }
@@ -83,11 +92,16 @@ public class SlabAction {
         }
 
         if (this.atomsViewer == null) {
-            this.atomsViewer = this.createAtomsViewer();
+            this.atomsViewer = this.createAtomsViewer(srcAtomsViewer);
         }
 
         if (this.slabEditor != null && this.atomsViewer != null) {
-            this.controller.setModelerSlabMode();
+            this.controller.setModelerSlabMode(controller2 -> {
+                Design srcDesign = srcAtomsViewer == null ? null : srcAtomsViewer.getDesign();
+                if (srcDesign != null) {
+                    this.atomsViewer.setDesign(srcDesign);
+                }
+            });
 
             this.controller.setOnModeBacked(controller2 -> {
                 boolean status = this.showFinishDialog();
@@ -142,14 +156,18 @@ public class SlabAction {
         return slabEditor;
     }
 
-    private AtomsViewer createAtomsViewer() {
+    private AtomsViewer createAtomsViewer(AtomsViewer srcAtomsViewer) {
         Cell cell = this.slabModeler == null ? null : this.slabModeler.getCell();
         if (cell == null) {
             return null;
         }
 
         AtomsViewer atomsViewer = new AtomsViewer(cell, AtomsAction.getAtomsViewerSize(), true);
-        this.slabModeler.setAtomsViewer(atomsViewer);
+
+        Design srcDesign = srcAtomsViewer == null ? null : srcAtomsViewer.getDesign();
+        if (srcDesign != null) {
+            atomsViewer.setDesign(srcDesign);
+        }
 
         final BorderPane projectPane;
         if (this.controller != null) {
@@ -166,6 +184,8 @@ public class SlabAction {
                 return projectPane.getBottom();
             });
         }
+
+        this.slabModeler.setAtomsViewer(atomsViewer);
 
         return atomsViewer;
     }

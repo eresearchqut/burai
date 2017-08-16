@@ -55,6 +55,12 @@ public abstract class ModelerBase {
         this.atomsViewer = atomsViewer;
     }
 
+    public void center() {
+        if (this.atomsViewer != null) {
+            this.atomsViewer.setCellToCenter();
+        }
+    }
+
     public void initialize() {
         this.copyCellForward();
 
@@ -65,12 +71,6 @@ public abstract class ModelerBase {
 
     public void reflect() {
         this.copyCellBackward();
-    }
-
-    public void center() {
-        if (this.atomsViewer != null) {
-            this.atomsViewer.setCellToCenter();
-        }
     }
 
     public boolean isToReflect() {

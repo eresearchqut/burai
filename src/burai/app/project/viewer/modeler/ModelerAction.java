@@ -12,20 +12,21 @@ package burai.app.project.viewer.modeler;
 import java.io.IOException;
 import java.util.Optional;
 
+import burai.app.QEFXMain;
+import burai.app.project.QEFXProjectController;
+import burai.app.project.editor.modeler.QEFXModelerEditor;
+import burai.app.project.viewer.atoms.AtomsAction;
+import burai.atoms.design.Design;
+import burai.atoms.model.Cell;
+import burai.atoms.viewer.AtomsViewer;
+import burai.atoms.viewer.AtomsViewerInterface;
+import burai.project.Project;
 import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.BorderPane;
-import burai.app.QEFXMain;
-import burai.app.project.QEFXProjectController;
-import burai.app.project.editor.modeler.QEFXModelerEditor;
-import burai.app.project.viewer.atoms.AtomsAction;
-import burai.atoms.model.Cell;
-import burai.atoms.viewer.AtomsViewer;
-import burai.atoms.viewer.AtomsViewerInterface;
-import burai.project.Project;
 
 public class ModelerAction {
 
@@ -67,6 +68,14 @@ public class ModelerAction {
     }
 
     private void initializeModeler() {
+        final AtomsViewer srcAtomsViewer;
+        AtomsViewerInterface srcAtomsViewerInterface = this.controller.getAtomsViewer();
+        if (srcAtomsViewerInterface != null && srcAtomsViewerInterface instanceof AtomsViewer) {
+            srcAtomsViewer = (AtomsViewer) srcAtomsViewerInterface;
+        } else {
+            srcAtomsViewer = null;
+        }
+
         if (this.modeler == null) {
             this.modeler = new Modeler(this.project);
         }
@@ -82,11 +91,16 @@ public class ModelerAction {
         }
 
         if (this.atomsViewer == null) {
-            this.atomsViewer = this.createAtomsViewer();
+            this.atomsViewer = this.createAtomsViewer(srcAtomsViewer);
         }
 
         if (modelerEditor != null && this.atomsViewer != null) {
-            this.controller.setModelerMode();
+            this.controller.setModelerMode(controller2 -> {
+                Design srcDesign = srcAtomsViewer == null ? null : srcAtomsViewer.getDesign();
+                if (srcDesign != null) {
+                    this.atomsViewer.setDesign(srcDesign);
+                }
+            });
 
             this.controller.setOnModeBacked(controller2 -> {
                 if (this.modeler != null && this.modeler.isToReflect()) {
@@ -110,14 +124,18 @@ public class ModelerAction {
         }
     }
 
-    private AtomsViewer createAtomsViewer() {
+    private AtomsViewer createAtomsViewer(AtomsViewer srcAtomsViewer) {
         Cell cell = this.modeler == null ? null : this.modeler.getCell();
         if (cell == null) {
             return null;
         }
 
         AtomsViewer atomsViewer = new AtomsViewer(cell, AtomsAction.getAtomsViewerSize());
-        this.modeler.setAtomsViewer(atomsViewer);
+
+        Design srcDesign = srcAtomsViewer == null ? null : srcAtomsViewer.getDesign();
+        if (srcDesign != null) {
+            atomsViewer.setDesign(srcDesign);
+        }
 
         final BorderPane projectPane;
         if (this.controller != null) {
@@ -134,6 +152,8 @@ public class ModelerAction {
                 return projectPane.getBottom();
             });
         }
+
+        this.modeler.setAtomsViewer(atomsViewer);
 
         return atomsViewer;
     }
