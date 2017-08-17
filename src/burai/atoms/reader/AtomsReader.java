@@ -20,17 +20,23 @@ import burai.atoms.model.Cell;
 public abstract class AtomsReader {
 
     private static final int FILE_TYPE_NULL = 0;
-    private static final int FILE_TYPE_XYZ = 1;
-    private static final int FILE_TYPE_CIF = 2;
-    private static final int FILE_TYPE_CUBE = 3;
-    private static final int FILE_TYPE_QE = 4;
+    private static final int FILE_TYPE_QE = 1;
+    private static final int FILE_TYPE_XYZ = 2;
+    private static final int FILE_TYPE_CIF = 3;
+    private static final int FILE_TYPE_CUBE = 4;
+    private static final int FILE_TYPE_XSF = 5;
+    private static final int FILE_TYPE_AXSF = 6;
+    private static final int FILE_TYPE_VASP = 7;
 
-    private static int getFileType(String fileName) {
-        if (fileName == null || fileName.isEmpty()) {
+    private static final String VASP_NAME_POSCAR = File.separator + "POSCAR";
+    private static final String VASP_NAME_CONTCAR = File.separator + "CONTCAR";
+
+    private static int getFileType(String filePath) {
+        if (filePath == null || filePath.isEmpty()) {
             return FILE_TYPE_NULL;
         }
 
-        String[] subNames = fileName.trim().split("\\.");
+        String[] subNames = filePath.trim().split("\\.");
         if (subNames == null || subNames.length < 1) {
             return FILE_TYPE_NULL;
         }
@@ -40,51 +46,65 @@ public abstract class AtomsReader {
             return FILE_TYPE_NULL;
         }
 
-        if ("xyz".equalsIgnoreCase(extName)) {
+        if ("in".equalsIgnoreCase(extName)) {
+            return FILE_TYPE_QE;
+        } else if ("xyz".equalsIgnoreCase(extName)) {
             return FILE_TYPE_XYZ;
         } else if ("cif".equalsIgnoreCase(extName)) {
             return FILE_TYPE_CIF;
         } else if ("cube".equalsIgnoreCase(extName) || "cub".equalsIgnoreCase(extName)) {
             return FILE_TYPE_CUBE;
-        } else if ("in".equalsIgnoreCase(extName)) {
-            return FILE_TYPE_QE;
+        } else if ("xsf".equalsIgnoreCase(extName)) {
+            return FILE_TYPE_XSF;
+        } else if ("axsf".equalsIgnoreCase(extName)) {
+            return FILE_TYPE_AXSF;
+        } else if (filePath.endsWith(VASP_NAME_POSCAR) || filePath.endsWith(VASP_NAME_CONTCAR)) {
+            return FILE_TYPE_VASP;
         } else {
             return FILE_TYPE_NULL;
         }
     }
 
-    public static boolean isToBeInstance(String fileName) {
-        if (fileName == null || fileName.trim().isEmpty()) {
+    public static boolean isToBeInstance(String filePath) {
+        if (filePath == null || filePath.trim().isEmpty()) {
             return false;
         }
 
-        return getFileType(fileName) != FILE_TYPE_NULL;
+        return getFileType(filePath) != FILE_TYPE_NULL;
     }
 
-    public static AtomsReader getInstance(String fileName) throws IOException {
-        if (fileName == null || fileName.trim().isEmpty()) {
-            throw new IllegalArgumentException("file name is empty.");
+    public static AtomsReader getInstance(String filePath) throws IOException {
+        if (filePath == null || filePath.trim().isEmpty()) {
+            throw new IllegalArgumentException("file path is empty.");
         }
 
         AtomsReader atomsReader = null;
-        int fileType = getFileType(fileName);
+        int fileType = getFileType(filePath);
 
         switch (fileType) {
+        case FILE_TYPE_QE:
+            atomsReader = new QEReader(filePath);
+            break;
         case FILE_TYPE_XYZ:
-            atomsReader = new XYZReader(fileName);
+            atomsReader = new XYZReader(filePath);
             break;
         case FILE_TYPE_CIF:
-            atomsReader = new CIFReader(fileName);
+            atomsReader = new CIFReader(filePath);
             break;
         case FILE_TYPE_CUBE:
-            atomsReader = new CubeReader(fileName);
+            atomsReader = new CubeReader(filePath);
             break;
-        case FILE_TYPE_QE:
-            atomsReader = new QEReader(fileName);
+        case FILE_TYPE_XSF:
+            atomsReader = new XSFReader(filePath, false);
             break;
-
+        case FILE_TYPE_AXSF:
+            atomsReader = new XSFReader(filePath, true);
+            break;
+        case FILE_TYPE_VASP:
+            atomsReader = new VASPReader(filePath);
+            break;
         default:
-            throw new IOException("cannot read a file: " + fileName);
+            throw new IOException("cannot read a file: " + filePath);
         }
 
         return atomsReader;
@@ -96,8 +116,8 @@ public abstract class AtomsReader {
         this.reader = null;
     }
 
-    protected AtomsReader(String fileName) throws FileNotFoundException {
-        this(fileName == null || fileName.isEmpty() ? null : new File(fileName));
+    protected AtomsReader(String filePath) throws FileNotFoundException {
+        this(filePath == null || filePath.isEmpty() ? null : new File(filePath));
     }
 
     protected AtomsReader(File file) throws FileNotFoundException {

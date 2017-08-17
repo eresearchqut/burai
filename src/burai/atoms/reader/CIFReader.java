@@ -54,8 +54,8 @@ public class CIFReader extends AtomsReader {
     private CIFLoopValue symmetry;
     private CIFLoopValue atomSite;
 
-    public CIFReader(String fileName) throws FileNotFoundException {
-        super(fileName);
+    public CIFReader(String filePath) throws FileNotFoundException {
+        super(filePath);
         this.initializeParameters();
     }
 
@@ -172,7 +172,7 @@ public class CIFReader extends AtomsReader {
 
             CIFLoopValue loopValue = new CIFLoopValue();
             if (loopValue.readHeader(line)) {
-                if (!loopValue.readBody(reader)) {
+                if (!loopValue.readBody(this.reader)) {
                     continue;
                 }
 

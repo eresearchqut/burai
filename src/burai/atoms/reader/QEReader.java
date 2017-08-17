@@ -20,9 +20,9 @@ public class QEReader extends AtomsReader {
 
     private QEGeometryInput input;
 
-    public QEReader(String fileName) throws IOException {
+    public QEReader(String filePath) throws IOException {
         super();
-        this.input = new QEGeometryInput(fileName);
+        this.input = new QEGeometryInput(filePath);
     }
 
     public QEReader(File file) throws IOException {

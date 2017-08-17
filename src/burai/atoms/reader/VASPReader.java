@@ -15,18 +15,14 @@ import java.io.IOException;
 
 import burai.atoms.model.Cell;
 
-public class XSFReader extends AtomsReader {
+public class VASPReader extends AtomsReader {
 
-    private boolean animation;
-
-    public XSFReader(String filePath, boolean animation) throws FileNotFoundException {
+    public VASPReader(String filePath) throws FileNotFoundException {
         super(filePath);
-        this.animation = animation;
     }
 
-    public XSFReader(File file, boolean animation) throws FileNotFoundException {
+    public VASPReader(File file) throws FileNotFoundException {
         super(file);
-        this.animation = animation;
     }
 
     @Override

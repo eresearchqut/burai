@@ -21,8 +21,8 @@ public class XYZReader extends AtomsReader {
 
     private static final double BUFFER_OF_CELL = 5.0;
 
-    public XYZReader(String fileName) throws FileNotFoundException {
-        super(fileName);
+    public XYZReader(String filePath) throws FileNotFoundException {
+        super(filePath);
     }
 
     public XYZReader(File file) throws FileNotFoundException {

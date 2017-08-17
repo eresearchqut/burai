@@ -21,8 +21,8 @@ import burai.com.consts.Constants;
 
 public class CubeReader extends AtomsReader {
 
-    public CubeReader(String fileName) throws FileNotFoundException {
-        super(fileName);
+    public CubeReader(String filePath) throws FileNotFoundException {
+        super(filePath);
     }
 
     public CubeReader(File file) throws FileNotFoundException {
