@@ -21,6 +21,8 @@ public final class ElementUtil {
 
     private static final Pattern NAME_PATTERN = Pattern.compile("[0-9_-]");
 
+    private static String[] ATOMIC_NUMBERS = null;
+
     private static enum Element {
         H(1, 0.32, 1.000000, 1.000000, 1.000000, 2.20, 1.00794, 1),
         He(2, 0.46, 0.850980, 1.000000, 1.000000, 4.16, 4.00260, 2),
@@ -220,11 +222,29 @@ public final class ElementUtil {
     }
 
     public static String toElementName(int atomicNumber) {
-        Element[] elements = Element.values();
-        for (Element element : elements) {
-            if (element.getAtomicNumber() == atomicNumber) {
-                return element.name();
+        if (ATOMIC_NUMBERS == null) {
+            Element[] elements = Element.values();
+
+            int maxNum = 1;
+            for (Element element : elements) {
+                maxNum = Math.max(maxNum, element.getAtomicNumber());
             }
+
+            ATOMIC_NUMBERS = new String[maxNum];
+            for (int i = 0; i < ATOMIC_NUMBERS.length; i++) {
+                ATOMIC_NUMBERS[i] = null;
+            }
+
+            for (Element element : elements) {
+                int atomicNumber_ = element.getAtomicNumber();
+                if (atomicNumber_ > 0) {
+                    ATOMIC_NUMBERS[atomicNumber_ - 1] = element.name();
+                }
+            }
+        }
+
+        if (0 < atomicNumber && atomicNumber <= ATOMIC_NUMBERS.length) {
+            return ATOMIC_NUMBERS[atomicNumber - 1];
         }
 
         return null;
