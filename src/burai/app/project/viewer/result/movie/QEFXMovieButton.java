@@ -34,8 +34,6 @@ public abstract class QEFXMovieButton extends QEFXResultButton<QEFXMovieViewer, 
 
     private ProjectProperty projectProperty;
 
-    private Design design;
-
     protected QEFXMovieButton(QEFXProjectController projectController,
             Project project, ProjectProperty projectProperty, String title, String subTitle, boolean mdMode) {
 
@@ -52,7 +50,6 @@ public abstract class QEFXMovieButton extends QEFXResultButton<QEFXMovieViewer, 
         this.project = project;
         this.projectProperty = projectProperty;
         this.mdMode = mdMode;
-        this.design = this.createDesign();
     }
 
     private Design createDesign() {
@@ -126,8 +123,9 @@ public abstract class QEFXMovieButton extends QEFXResultButton<QEFXMovieViewer, 
         QEFXMovieViewer movieViewer = new QEFXMovieViewer(
                 this.projectController, this.projectProperty, cell, this.mdMode);
 
-        if (this.design != null) {
-            movieViewer.setDesign(this.design);
+        Design design = this.createDesign();
+        if (design != null) {
+            movieViewer.setDesign(design);
         }
 
         return movieViewer;
