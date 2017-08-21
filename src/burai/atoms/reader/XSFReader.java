@@ -64,12 +64,18 @@ public class XSFReader extends AtomsReader {
         String sysType = this.readNetLine();
 
         if ("ATOMS".equalsIgnoreCase(sysType)) {
+            /*
+             * system is a molecule
+             */
             return this.readMolecularStructure();
 
         } else if ("CRYSTAL".equalsIgnoreCase(sysType)
                 || "SLAB".equalsIgnoreCase(sysType)
                 || "POLYMER".equalsIgnoreCase(sysType)
                 || "MOLECULE".equalsIgnoreCase(sysType)) {
+            /*
+             * system is periodic
+             */
             return this.readPeriodicStructure();
 
         } else {
