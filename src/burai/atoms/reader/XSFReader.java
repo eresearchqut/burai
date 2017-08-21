@@ -106,6 +106,7 @@ public class XSFReader extends AtomsReader {
         /*
          * create lattice vectors
          */
+        this.moveMoleculeToCenter(coords);
         double[][] lattice = this.createLatticeAroundMolecule(coords);
 
         /*
@@ -129,6 +130,33 @@ public class XSFReader extends AtomsReader {
         cell.restartResolving();
 
         return cell;
+    }
+
+    private void moveMoleculeToCenter(List<double[]> coords) {
+        if (coords == null || coords.isEmpty()) {
+            return;
+        }
+
+        double xMean = 0.0;
+        double yMean = 0.0;
+        double zMean = 0.0;
+
+        for (double[] coord : coords) {
+            xMean += coord[0];
+            yMean += coord[1];
+            zMean += coord[2];
+        }
+
+        int numCoords = coords.size();
+        xMean /= (double) numCoords;
+        yMean /= (double) numCoords;
+        zMean /= (double) numCoords;
+
+        for (double[] coord : coords) {
+            coord[0] -= xMean;
+            coord[1] -= yMean;
+            coord[2] -= zMean;
+        }
     }
 
     private double[][] createLatticeAroundMolecule(List<double[]> coords) {
