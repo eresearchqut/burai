@@ -153,10 +153,6 @@ public class AtomsViewer extends AtomsViewerBase<Group> {
 
         design.addOnShowingCellChanged(showing -> {
             this.setCellToCenter();
-
-            if (this.cell != null) {
-                this.cell.setProperty(CellProperty.MOLECULE, !showing);
-            }
         });
 
         return design;
