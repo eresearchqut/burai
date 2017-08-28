@@ -16,6 +16,7 @@ public class ProjectStatus {
     private String date;
 
     private String cellAxis;
+    private boolean molecule;
 
     private int scfCount;
     private int optCount;
@@ -27,6 +28,7 @@ public class ProjectStatus {
         this.updateDate();
 
         this.cellAxis = null;
+        this.molecule = false;
 
         this.scfCount = 0;
         this.optCount = 0;
@@ -50,6 +52,14 @@ public class ProjectStatus {
 
     public synchronized void setCellAxis(String cellAxis) {
         this.cellAxis = cellAxis;
+    }
+
+    public synchronized boolean isMolecule() {
+        return this.molecule;
+    }
+
+    public synchronized void setMolecule(boolean molecule) {
+        this.molecule = molecule;
     }
 
     public synchronized boolean isScfDone() {

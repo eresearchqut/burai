@@ -636,16 +636,21 @@ public enum RunningType {
 
         case Project.INPUT_MODE_OPTIMIZ:
         case Project.INPUT_MODE_MD:
-            String axis = null;
             Cell cell = project == null ? null : project.getCell();
+
+            String axis = null;
             if (cell != null && cell.hasProperty(CellProperty.AXIS)) {
                 axis = cell.stringProperty(CellProperty.AXIS);
             }
 
-            GeometryParser parser = new GeometryParser(projectProperty, this.inputMode == Project.INPUT_MODE_MD);
-            if (axis != null) {
-                parser.setCellAxis(axis);
+            boolean molecule = false;
+            if (cell != null && cell.hasProperty(CellProperty.MOLECULE)) {
+                molecule = cell.booleanProperty(CellProperty.MOLECULE);
             }
+
+            GeometryParser parser = new GeometryParser(projectProperty, this.inputMode == Project.INPUT_MODE_MD);
+            parser.setCellAxis(axis);
+            parser.setMolecule(molecule);
 
             parserList.add(parser);
             break;

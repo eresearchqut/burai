@@ -115,6 +115,9 @@ public abstract class QEFXMovieButton extends QEFXResultButton<QEFXMovieViewer, 
                 cell.removeProperty(CellProperty.AXIS);
             }
 
+            boolean molecule = projectGeometryList.isMolecule();
+            cell.setProperty(CellProperty.MOLECULE, molecule);
+
         } catch (Exception e) {
             e.printStackTrace();
             return null;

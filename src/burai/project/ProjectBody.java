@@ -230,12 +230,16 @@ public class ProjectBody extends Project {
 
         if (this.cell != null) {
             ProjectStatus status = this.property == null ? null : this.property.getStatus();
+
             String axis = status == null ? null : status.getCellAxis();
             if (axis != null) {
                 this.cell.setProperty(CellProperty.AXIS, axis);
             } else {
                 this.cell.removeProperty(CellProperty.AXIS);
             }
+
+            boolean molecule = status == null ? false : status.isMolecule();
+            this.cell.setProperty(CellProperty.MOLECULE, molecule);
         }
     }
 
@@ -678,6 +682,12 @@ public class ProjectBody extends Project {
                     status.setCellAxis(this.cell.stringProperty(CellProperty.AXIS));
                 } else {
                     status.setCellAxis(null);
+                }
+
+                if (this.cell != null && this.cell.hasProperty(CellProperty.MOLECULE)) {
+                    status.setMolecule(this.cell.booleanProperty(CellProperty.MOLECULE));
+                } else {
+                    status.setMolecule(false);
                 }
             }
 

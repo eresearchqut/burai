@@ -177,6 +177,9 @@ public abstract class ModelerBase {
             this.dstCell.removeProperty(CellProperty.AXIS);
         }
 
+        boolean molecule = this.srcCell.booleanProperty(CellProperty.MOLECULE);
+        this.dstCell.setProperty(CellProperty.MOLECULE, molecule);
+
         // setup atoms
         Atom[] atoms = this.srcCell.listAtoms(true);
         if (atoms != null) {
@@ -235,6 +238,9 @@ public abstract class ModelerBase {
         } else {
             this.srcCell.removeProperty(CellProperty.AXIS);
         }
+
+        boolean molecule = this.dstCell.booleanProperty(CellProperty.MOLECULE);
+        this.srcCell.setProperty(CellProperty.MOLECULE, molecule);
 
         // setup atoms
         Atom[] atoms = this.dstCell.listAtoms(true);

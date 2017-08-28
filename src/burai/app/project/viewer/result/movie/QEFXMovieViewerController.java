@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javafx.scene.Node;
 import burai.app.project.QEFXProjectController;
 import burai.app.project.viewer.result.QEFXResultViewerController;
 import burai.atoms.model.Atom;
@@ -25,6 +24,7 @@ import burai.com.math.Matrix3D;
 import burai.project.property.ProjectGeometry;
 import burai.project.property.ProjectGeometryList;
 import burai.project.property.ProjectProperty;
+import javafx.scene.Node;
 
 public class QEFXMovieViewerController extends QEFXResultViewerController {
 
@@ -43,8 +43,8 @@ public class QEFXMovieViewerController extends QEFXResultViewerController {
 
     private ProjectGeometryList projectGeometryListSaved;
 
-    public QEFXMovieViewerController(QEFXProjectController
-            projectController, ProjectProperty projectProperty, Cell cell, boolean mdMode) {
+    public QEFXMovieViewerController(QEFXProjectController projectController, ProjectProperty projectProperty,
+            Cell cell, boolean mdMode) {
 
         super(projectController);
 
@@ -243,6 +243,9 @@ public class QEFXMovieViewerController extends QEFXResultViewerController {
         } else {
             this.cell.removeProperty(CellProperty.AXIS);
         }
+
+        boolean molecule = this.projectGeometryList.isMolecule();
+        this.cell.setProperty(CellProperty.MOLECULE, molecule);
 
         int natom = projectGeometry.numAtoms();
         int natom2 = this.cell.numAtoms(true);

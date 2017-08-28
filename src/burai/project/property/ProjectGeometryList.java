@@ -16,12 +16,15 @@ public class ProjectGeometryList {
 
     private String cellAxis;
 
+    private boolean molecule;
+
     private boolean converged;
 
     private List<ProjectGeometry> geometries;
 
     public ProjectGeometryList() {
         this.cellAxis = null;
+        this.molecule = false;
 
         this.converged = false;
         this.geometries = null;
@@ -33,6 +36,14 @@ public class ProjectGeometryList {
 
     public synchronized void setCellAxis(String cellAxis) {
         this.cellAxis = cellAxis;
+    }
+
+    public synchronized boolean isMolecule() {
+        return this.molecule;
+    }
+
+    public synchronized void setMolecule(boolean molecule) {
+        this.molecule = molecule;
     }
 
     public synchronized boolean isConverged() {
@@ -115,6 +126,7 @@ public class ProjectGeometryList {
         ProjectGeometryList other = new ProjectGeometryList();
 
         other.cellAxis = this.cellAxis;
+        other.molecule = this.molecule;
 
         other.converged = this.converged;
 

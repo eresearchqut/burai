@@ -177,6 +177,8 @@ public class AtomsLogger {
         } else {
             this.cell.removeProperty(CellProperty.AXIS);
         }
+
+        this.cell.setProperty(CellProperty.MOLECULE, config.molecule);
     }
 
     private void restoreAtoms(Configuration config) {
@@ -231,6 +233,8 @@ public class AtomsLogger {
 
         public String axis;
 
+        public boolean molecule;
+
         public String[] atomName;
 
         public double[][] atomCoord;
@@ -242,6 +246,7 @@ public class AtomsLogger {
         public Configuration(AtomsLogger parent) {
             this.lattice = null;
             this.axis = null;
+            this.molecule = false;
             this.atomName = null;
             this.atomCoord = null;
             this.atomFixed = null;
@@ -265,6 +270,8 @@ public class AtomsLogger {
             this.lattice = parent.cell.copyLattice();
 
             this.axis = parent.cell.stringProperty(CellProperty.AXIS);
+
+            this.molecule = parent.cell.booleanProperty(CellProperty.MOLECULE);
 
             Atom[] atoms = parent.cell.listAtoms();
             if (atoms != null && atoms.length > 0) {

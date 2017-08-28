@@ -50,6 +50,12 @@ public class GeometryParser extends LogParser {
         }
     }
 
+    public void setMolecule(boolean molecule) {
+        if (this.geometryList != null) {
+            this.geometryList.setMolecule(molecule);
+        }
+    }
+
     @Override
     public void parse(File file) throws IOException {
         this.scfParser.parse(file);
@@ -548,7 +554,8 @@ public class GeometryParser extends LogParser {
                 if (line.startsWith("Entering Dynamics")) {
                     for (int i = 0; i < 2; i++) {
                         String[] subLines = line == null ? null : line.split("\\s+");
-                        if (subLines != null && subLines.length > 1 && "pico-seconds".equals(subLines[subLines.length - 1])) {
+                        if (subLines != null && subLines.length > 1
+                                && "pico-seconds".equals(subLines[subLines.length - 1])) {
                             try {
                                 time = Double.parseDouble(subLines[subLines.length - 2]);
                                 hasTime = true;
