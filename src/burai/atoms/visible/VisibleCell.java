@@ -17,6 +17,7 @@ import burai.atoms.model.Bond;
 import burai.atoms.model.Cell;
 import burai.atoms.model.event.CellEvent;
 import burai.atoms.model.event.CellEventListener;
+import burai.atoms.model.property.CellProperty;
 import burai.com.math.Matrix3D;
 import javafx.geometry.Point3D;
 import javafx.scene.Node;
@@ -113,7 +114,11 @@ public class VisibleCell extends Visible<Cell> implements CellEventListener {
     }
 
     private void updateVisibleCylinders() {
-        this.currentShowing = this.design == null ? true : this.design.isShowingCell();
+        if (this.design != null) {
+            this.currentShowing = this.design.isShowingCell();
+        } else {
+            this.currentShowing = !this.model.booleanProperty(CellProperty.MOLECULE);
+        }
 
         for (int i = 0; i < this.latticeCylinders.length; i++) {
             this.latticeCylinders[i].setVisible(this.currentShowing);
