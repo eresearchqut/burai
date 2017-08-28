@@ -57,7 +57,8 @@ public abstract class AtomsReader {
         } else if ("xsf".equalsIgnoreCase(extName)) {
             return FILE_TYPE_XSF;
         } else if ("axsf".equalsIgnoreCase(extName)) {
-            return FILE_TYPE_AXSF;
+            //return FILE_TYPE_AXSF;
+            return FILE_TYPE_NULL;
         } else if (filePath.endsWith(VASP_NAME_POSCAR) || filePath.endsWith(VASP_NAME_CONTCAR)) {
             return FILE_TYPE_VASP;
         } else {

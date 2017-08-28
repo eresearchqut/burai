@@ -11,6 +11,8 @@ package burai.atoms.vlight;
 
 import java.util.List;
 
+import burai.atoms.model.Cell;
+import burai.atoms.viewer.AtomsViewer;
 import javafx.scene.AmbientLight;
 import javafx.scene.Camera;
 import javafx.scene.DepthTest;
@@ -20,8 +22,6 @@ import javafx.scene.PerspectiveCamera;
 import javafx.scene.SceneAntialiasing;
 import javafx.scene.SubScene;
 import javafx.scene.paint.Color;
-import burai.atoms.model.Cell;
-import burai.atoms.viewer.AtomsViewer;
 
 public class AtomsVLight extends Group {
 
@@ -63,7 +63,7 @@ public class AtomsVLight extends Group {
         this.createSubScene();
         this.getChildren().add(this.subScene);
 
-        this.initialRotation(cell);
+        this.initialOperations(cell);
     }
 
     private void createCamera(boolean parallel) {
@@ -92,23 +92,31 @@ public class AtomsVLight extends Group {
         this.subScene.setOnMouseReleased(handler);
     }
 
-    private void initialRotation(Cell cell) {
+    private void initialOperations(Cell cell) {
         if (cell == null) {
             return;
         }
 
-        List<double[]> rotations = AtomsViewer.getInitialRotation(cell);
-        if (rotations == null || rotations.isEmpty()) {
+        List<double[]> operations = AtomsViewer.getInitialOperations(cell);
+        if (operations == null || operations.isEmpty()) {
             return;
         }
 
-        for (double[] rotation : rotations) {
-            if (rotation != null && rotation.length > 3) {
-                double angle = rotation[0];
-                double axisX = rotation[1];
-                double axisY = rotation[2];
-                double axisZ = rotation[3];
+        for (double[] operation : operations) {
+            if (operation == null) {
+                continue;
+            }
+
+            if (operation.length >= 4) {
+                double angle = operation[0];
+                double axisX = operation[1];
+                double axisY = operation[2];
+                double axisZ = operation[3];
                 this.appendRotation(angle, axisX, axisY, axisZ);
+
+            } else if (operation.length >= 1) {
+                double scale = operation[0];
+                this.appendScale(scale);
             }
         }
     }

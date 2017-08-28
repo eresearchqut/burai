@@ -19,6 +19,7 @@ import burai.atoms.element.ElementUtil;
 import burai.atoms.model.Atom;
 import burai.atoms.model.Cell;
 import burai.atoms.model.exception.ZeroVolumCellException;
+import burai.atoms.model.property.CellProperty;
 
 public class XSFReader extends AtomsReader {
 
@@ -118,6 +119,8 @@ public class XSFReader extends AtomsReader {
         } catch (ZeroVolumCellException e) {
             throw new IOException(e);
         }
+
+        cell.setProperty(CellProperty.MOLECULE, true);
 
         cell.stopResolving();
 

@@ -13,4 +13,6 @@ public interface CellProperty {
 
     public static final String AXIS = "axis";
 
+    public static final String MOLECULE = "molecule";
+
 }

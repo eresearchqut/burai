@@ -16,6 +16,7 @@ import java.io.IOException;
 import burai.atoms.model.Atom;
 import burai.atoms.model.Cell;
 import burai.atoms.model.exception.ZeroVolumCellException;
+import burai.atoms.model.property.CellProperty;
 
 public class XYZReader extends AtomsReader {
 
@@ -87,9 +88,11 @@ public class XYZReader extends AtomsReader {
         /*
          * create an instance of Cell
          */
+        boolean isMolecule = false;
         if (lattice == null) {
             this.moveAtomsToCenter(coord);
             lattice = this.createLatticeVector(coord);
+            isMolecule = true;
         }
 
         Cell cell = null;
@@ -97,6 +100,10 @@ public class XYZReader extends AtomsReader {
             cell = new Cell(lattice);
         } catch (ZeroVolumCellException e) {
             throw new IOException(e);
+        }
+
+        if (isMolecule) {
+            cell.setProperty(CellProperty.MOLECULE, true);
         }
 
         cell.stopResolving();

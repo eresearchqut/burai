@@ -34,6 +34,8 @@ public class AtomsViewer extends AtomsViewerBase<Group> {
 
     private boolean compassMode;
 
+    private boolean initiallyOperated;
+
     private ViewerCell viewerCell;
     private ViewerSample viewerSample;
     private ViewerXYZAxis viewerXYZAxis;
@@ -109,11 +111,17 @@ public class AtomsViewer extends AtomsViewerBase<Group> {
         });
 
         this.applyDesign();
-        this.initialRotation();
+        this.initialOperations();
     }
 
     private Design createDesign() {
         Design design = new Design();
+
+        if (this.cell != null && this.cell.hasProperty(CellProperty.MOLECULE)) {
+            if (this.cell != null && this.cell.booleanProperty(CellProperty.MOLECULE)) {
+                design.setShowingCell(false);
+            }
+        }
 
         design.addOnBackColorChanged(color -> {
             if (color == null) {
@@ -141,6 +149,10 @@ public class AtomsViewer extends AtomsViewerBase<Group> {
             this.viewerXYZAxis.getNode().setVisible(showing);
         });
 
+        design.addOnShowingCellChanged(showing -> {
+            this.setCellToCenter();
+        });
+
         return design;
     }
 
@@ -150,32 +162,55 @@ public class AtomsViewer extends AtomsViewerBase<Group> {
         this.viewerXYZAxis.getNode().setVisible(this.design.isShowingAxis());
     }
 
-    private void initialRotation() {
+    private void initialOperations() {
         if (this.cell == null) {
             return;
         }
 
-        List<double[]> rotations = getInitialRotation(this.cell);
-        if (rotations == null || rotations.isEmpty()) {
+        List<double[]> operations = getInitialOperations(this.cell, this.design);
+        if (operations == null || operations.isEmpty()) {
             return;
         }
 
-        for (double[] rotation : rotations) {
-            if (rotation != null && rotation.length > 3) {
-                double angle = rotation[0];
-                double axisX = rotation[1];
-                double axisY = rotation[2];
-                double axisZ = rotation[3];
+        for (double[] operation : operations) {
+            if (operation == null) {
+                continue;
+            }
+
+            if (operation.length >= 4) {
+                double angle = operation[0];
+                double axisX = operation[1];
+                double axisY = operation[2];
+                double axisZ = operation[3];
                 this.appendCellRotation(angle, axisX, axisY, axisZ);
+
+            } else if (operation.length >= 3) {
+                double x = operation[0];
+                double y = operation[1];
+                double z = operation[2];
+                this.appendCellTranslation(x, y, z);
+
+            } else if (operation.length >= 1) {
+                double scale = operation[0];
+                this.appendCellScale(scale);
             }
         }
+
+        this.initiallyOperated = true;
     }
 
-    public static List<double[]> getInitialRotation(Cell cell) {
+    public static List<double[]> getInitialOperations(Cell cell) {
+        return getInitialOperations(cell, null);
+    }
+
+    public static List<double[]> getInitialOperations(Cell cell, Design design) {
         if (cell == null) {
             return null;
         }
 
+        List<double[]> operations = new ArrayList<double[]>();
+
+        // get length of lattice
         double[][] lattice = cell.copyLattice();
         if (lattice == null || lattice.length < 3) {
             return null;
@@ -186,69 +221,133 @@ public class AtomsViewer extends AtomsViewerBase<Group> {
             }
         }
 
-        double x = Lattice.getXMax(lattice) - Lattice.getXMin(lattice);
-        if (x <= 0.0) {
+        double xLatt = Lattice.getXMax(lattice) - Lattice.getXMin(lattice);
+        if (xLatt <= 0.0) {
             return null;
         }
 
-        double y = Lattice.getYMax(lattice) - Lattice.getYMin(lattice);
-        if (y <= 0.0) {
+        double yLatt = Lattice.getYMax(lattice) - Lattice.getYMin(lattice);
+        if (yLatt <= 0.0) {
             return null;
         }
 
-        double z = Lattice.getZMax(lattice) - Lattice.getZMin(lattice);
-        if (z <= 0.0) {
+        double zLatt = Lattice.getZMax(lattice) - Lattice.getZMin(lattice);
+        if (zLatt <= 0.0) {
             return null;
         }
 
+        double xBox = xLatt;
+        double yBox = yLatt;
+        double zBox = zLatt;
+
+        // is this molecule ?
+        boolean isMolecule = false;
+        if (design != null) {
+            isMolecule = !design.isShowingCell();
+
+        } else {
+            if (cell.hasProperty(CellProperty.MOLECULE)) {
+                isMolecule = cell.booleanProperty(CellProperty.MOLECULE);
+            }
+        }
+
+        if (isMolecule) {
+            Atom[] atoms = cell.listAtoms();
+            if (atoms != null && atoms.length > 0) {
+                // scale molecule
+                Atom atom = atoms[0];
+                double r = atom == null ? 1.0 : Math.max(1.0, atom.getRadius());
+                double x = atom == null ? 0.0 : atom.getX();
+                double y = atom == null ? 0.0 : atom.getY();
+                double z = atom == null ? 0.0 : atom.getZ();
+                double xMax = x + r;
+                double yMax = y + r;
+                double zMax = z + r;
+                double xMin = x - r;
+                double yMin = y - r;
+                double zMin = z - r;
+
+                for (int i = 1; i < atoms.length; i++) {
+                    atom = atoms[i];
+                    if (atom == null) {
+                        continue;
+                    }
+
+                    r = Math.max(1.0, atom.getRadius());
+                    x = atom.getX();
+                    y = atom.getY();
+                    z = atom.getZ();
+                    xMax = Math.max(xMax, x + r);
+                    yMax = Math.max(yMax, y + r);
+                    zMax = Math.max(zMax, z + r);
+                    xMin = Math.min(xMin, x - r);
+                    yMin = Math.min(yMin, y - r);
+                    zMin = Math.min(zMin, z - r);
+                }
+
+                double xMole = xMax - xMin;
+                double yMole = yMax - yMin;
+                double zMole = zMax - zMin;
+
+                xBox = xMole;
+                yBox = yMole;
+                zBox = zMole;
+
+                double rLatt = Math.max(Math.max(xLatt, yLatt), zLatt);
+                double rMole = Math.max(Math.max(xMole, yMole), zMole);
+                double scale = Math.max(1.0, rLatt / rMole);
+                operations.add(new double[] { scale });
+            }
+        }
+
+        // has specified axis ?
         String axis = null;
         if (cell.hasProperty(CellProperty.AXIS)) {
             axis = cell.stringProperty(CellProperty.AXIS);
         }
 
         if ("x".equalsIgnoreCase(axis)) {
-            x = Double.MAX_VALUE;
+            xBox = Double.MAX_VALUE;
         } else if ("y".equalsIgnoreCase(axis)) {
-            y = Double.MAX_VALUE;
+            yBox = Double.MAX_VALUE;
         } else if ("z".equalsIgnoreCase(axis)) {
-            z = Double.MAX_VALUE;
+            zBox = Double.MAX_VALUE;
         }
 
-        List<double[]> rotations = new ArrayList<double[]>();
-
-        if (y >= x && y >= z) {
-            if (x >= z) {
+        // rotate axis
+        if (yBox >= xBox && yBox >= zBox) {
+            if (xBox >= zBox) {
                 // y > x > z
                 // NOP
             } else {
                 // y > z > x
-                rotations.add(new double[] { -90.0, 0.0, 1.0, 0.0 });
+                operations.add(new double[] { -90.0, 0.0, 1.0, 0.0 });
             }
 
-        } else if (z >= x && z >= y) {
-            if (x >= y) {
+        } else if (zBox >= xBox && zBox >= yBox) {
+            if (xBox >= yBox) {
                 // z > x > y
-                rotations.add(new double[] { -90.0, 1.0, 0.0, 0.0 });
+                operations.add(new double[] { -90.0, 1.0, 0.0, 0.0 });
             } else {
                 // z > y > x
-                rotations.add(new double[] { -90.0, 1.0, 0.0, 0.0 });
-                rotations.add(new double[] { 90.0, 0.0, 1.0, 0.0 });
+                operations.add(new double[] { -90.0, 1.0, 0.0, 0.0 });
+                operations.add(new double[] { 90.0, 0.0, 1.0, 0.0 });
             }
 
-        } else if (x >= y && x >= z) {
-            if (y >= z) {
+        } else if (xBox >= yBox && xBox >= zBox) {
+            if (yBox >= zBox) {
                 // x > y > z
-                rotations.add(new double[] { 90.0, 0.0, 0.0, 1.0 });
-                rotations.add(new double[] { 180.0, 1.0, 0.0, 0.0 });
+                operations.add(new double[] { 90.0, 0.0, 0.0, 1.0 });
+                operations.add(new double[] { 180.0, 1.0, 0.0, 0.0 });
             } else {
                 // x > z > y
-                rotations.add(new double[] { 90.0, 0.0, 0.0, 1.0 });
-                rotations.add(new double[] { 180.0, 1.0, 0.0, 0.0 });
-                rotations.add(new double[] { 90.0, 0.0, 1.0, 0.0 });
+                operations.add(new double[] { 90.0, 0.0, 0.0, 1.0 });
+                operations.add(new double[] { 180.0, 1.0, 0.0, 0.0 });
+                operations.add(new double[] { 90.0, 0.0, 1.0, 0.0 });
             }
         }
 
-        return rotations;
+        return operations;
     }
 
     @Override
@@ -322,6 +421,8 @@ public class AtomsViewer extends AtomsViewerBase<Group> {
         }
 
         this.busyLinkedViewers = false;
+
+        this.initiallyOperated = false;
     }
 
     public void appendCellRotation(double angle, double axisX, double axisY, double axisZ) {
@@ -352,6 +453,8 @@ public class AtomsViewer extends AtomsViewerBase<Group> {
         }
 
         this.busyLinkedViewers = false;
+
+        this.initiallyOperated = false;
     }
 
     public void appendCellTranslation(double x, double y, double z) {
@@ -390,6 +493,8 @@ public class AtomsViewer extends AtomsViewerBase<Group> {
         }
 
         this.busyLinkedViewers = false;
+
+        this.initiallyOperated = false;
     }
 
     public void appendCompassRotation(double angle, double axisX, double axisY, double axisZ) {
@@ -528,7 +633,7 @@ public class AtomsViewer extends AtomsViewerBase<Group> {
             this.viewerXYZAxis.initialize();
         }
 
-        this.initialRotation();
+        this.initialOperations();
 
         this.busyLinkedViewers = true;
 
@@ -623,12 +728,20 @@ public class AtomsViewer extends AtomsViewerBase<Group> {
     public void setDesign(Design design) {
         if (design != null) {
             design.copyTo(this.design);
+
+            if (this.initiallyOperated) {
+                this.setCellToCenter();
+            }
         }
     }
 
     public void setDesign(String path) {
         if (path != null && !path.isEmpty()) {
             this.design.readDesign(path);
+
+            if (this.initiallyOperated) {
+                this.setCellToCenter();
+            }
         }
     }
 
