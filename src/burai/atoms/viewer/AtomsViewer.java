@@ -117,9 +117,11 @@ public class AtomsViewer extends AtomsViewerBase<Group> {
     private Design createDesign() {
         Design design = new Design();
 
-        if (this.cell != null && this.cell.hasProperty(CellProperty.MOLECULE)) {
-            if (this.cell != null && this.cell.booleanProperty(CellProperty.MOLECULE)) {
-                design.setShowingCell(false);
+        if (this.cell != null) {
+            if (this.cell.hasProperty(CellProperty.MOLECULE)) {
+                if (this.cell.booleanProperty(CellProperty.MOLECULE)) {
+                    design.setShowingCell(false);
+                }
             }
         }
 
@@ -151,6 +153,10 @@ public class AtomsViewer extends AtomsViewerBase<Group> {
 
         design.addOnShowingCellChanged(showing -> {
             this.setCellToCenter();
+
+            if (this.cell != null) {
+                this.cell.setProperty(CellProperty.MOLECULE, !showing);
+            }
         });
 
         return design;
