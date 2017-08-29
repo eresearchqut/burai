@@ -12,7 +12,7 @@ package burai.atoms.vlight;
 import java.util.List;
 
 import burai.atoms.model.Cell;
-import burai.atoms.viewer.AtomsViewer;
+import burai.atoms.viewer.InitialOperations;
 import javafx.scene.AmbientLight;
 import javafx.scene.Camera;
 import javafx.scene.DepthTest;
@@ -97,7 +97,7 @@ public class AtomsVLight extends Group {
             return;
         }
 
-        List<double[]> operations = AtomsViewer.getInitialOperations(cell);
+        List<double[]> operations = InitialOperations.getOperations(cell);
         if (operations == null || operations.isEmpty()) {
             return;
         }
