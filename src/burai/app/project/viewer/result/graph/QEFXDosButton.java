@@ -29,7 +29,8 @@ public class QEFXDosButton extends QEFXGraphButton<QEFXDosViewer> {
     private static final String BUTTON_FONT_COLOR = "-fx-text-fill: ivory";
     private static final String BUTTON_BACKGROUND = "-fx-background-color: derive(lightslategrey, -45.0%)";
 
-    public static QEFXResultButtonWrapper<QEFXDosButton> getWrapper(QEFXProjectController projectController, Project project) {
+    public static QEFXResultButtonWrapper<QEFXDosButton> getWrapper(QEFXProjectController projectController,
+            Project project) {
         if (projectController == null) {
             return null;
         }
@@ -50,12 +51,14 @@ public class QEFXDosButton extends QEFXGraphButton<QEFXDosViewer> {
         }
 
         List<DosData> dosDataList = projectDos.listDosData();
-        if (dosDataList == null || dosDataList.size() < 2) {
+        //if (dosDataList == null || dosDataList.size() < 2) {
+        if (dosDataList == null || dosDataList.size() < 1) {
             return null;
         }
 
         String dirPath = project == null ? null : project.getDirectoryPath();
-        String fileName = project == null ? null : (project.getPrefixName() + ".pdos_tot");
+        //String fileName = project == null ? null : (project.getPrefixName() + ".pdos_tot");
+        String fileName = project == null ? null : (project.getPrefixName() + ".dos");
 
         File file = null;
         if (dirPath != null && fileName != null) {

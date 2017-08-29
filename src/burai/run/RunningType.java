@@ -374,7 +374,18 @@ public enum RunningType {
 
             conditionList.add((project, input) -> true);
             conditionList.add((project, input) -> true);
-            conditionList.add((project, input) -> true);
+
+            conditionList.add((project, input) -> {
+                QENamelist nmlSystem = input == null ? null : input.getNamelist(QEInput.NAMELIST_SYSTEM);
+                if (nmlSystem == null) {
+                    return false;
+                }
+
+                QEValue value = nmlSystem.getValue("occupations");
+                String occup = value == null ? "" : value.getCharacterValue();
+                return !(occup.startsWith("tetrahedra"));
+            });
+
             break;
 
         case Project.INPUT_MODE_BAND:
