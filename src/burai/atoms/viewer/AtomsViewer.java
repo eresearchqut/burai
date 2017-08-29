@@ -45,6 +45,9 @@ public class AtomsViewer extends AtomsViewerBase<Group> {
 
     private Design design;
     private List<Node> backgroundNodes;
+    private boolean showingLegend;
+    private boolean showingAxis;
+    private boolean showingCell;
 
     private boolean busyLinkedViewers;
     private List<AtomsViewer> linkedViewers;
@@ -83,6 +86,9 @@ public class AtomsViewer extends AtomsViewerBase<Group> {
 
         this.design = this.createDesign();
         this.backgroundNodes = null;
+        this.showingLegend = this.design.isShowingLegend();
+        this.showingAxis = this.design.isShowingAxis();
+        this.showingCell = this.design.isShowingCell();
 
         this.busyLinkedViewers = false;
         this.linkedViewers = null;
@@ -111,6 +117,8 @@ public class AtomsViewer extends AtomsViewerBase<Group> {
         });
 
         this.applyDesign();
+
+        this.initiallyOperated = false;
         this.initialOperations();
     }
 
@@ -144,15 +152,24 @@ public class AtomsViewer extends AtomsViewerBase<Group> {
         });
 
         design.addOnShowingLegendChanged(showing -> {
-            this.viewerSample.getNode().setVisible(showing);
+            if (this.showingLegend != showing) {
+                this.showingLegend = showing;
+                this.viewerSample.getNode().setVisible(showing);
+            }
         });
 
         design.addOnShowingAxisChanged(showing -> {
-            this.viewerXYZAxis.getNode().setVisible(showing);
+            if (this.showingAxis != showing) {
+                this.showingAxis = showing;
+                this.viewerXYZAxis.getNode().setVisible(showing);
+            }
         });
 
         design.addOnShowingCellChanged(showing -> {
-            this.setCellToCenter();
+            if (this.showingCell != showing) {
+                this.showingCell = showing;
+                this.setCellToCenter();
+            }
         });
 
         return design;
