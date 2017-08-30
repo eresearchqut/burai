@@ -14,7 +14,7 @@ BURAI
 Version
 -------
 
-The latest version is 1.2.
+The latest version is 1.3.
 
 License
 -------
