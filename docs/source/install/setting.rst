@@ -5,8 +5,8 @@ Setting
 
 2. Copy it to any directory on your computer e.g.:
 
-  - "C:\\BURAI1.2_Windows\\" for Windows
-  - "/Applications/BURAI1.2.app" for Max OSX
+  - "C:\\BURAI1.3_Windows\\" for Windows
+  - "/Applications/BURAI1.3.app" for Max OSX
 
 3. Install `JRE1.8 or later version <https://java.com/download/>`_, if your computer does not have it.
 
