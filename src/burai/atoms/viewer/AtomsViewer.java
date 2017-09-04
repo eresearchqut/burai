@@ -118,7 +118,7 @@ public class AtomsViewer extends AtomsViewerBase<Group> {
         this.applyDesign();
 
         this.initiallyOperated = false;
-        this.initialOperations();
+        this.initialOperations(null);
     }
 
     private Design createDesign() {
@@ -180,17 +180,21 @@ public class AtomsViewer extends AtomsViewerBase<Group> {
         this.viewerXYZAxis.getNode().setVisible(this.design.isShowingAxis());
     }
 
-    private void initialOperations() {
+    private void initialOperations(List<double[]> operations) {
         if (this.cell == null) {
             return;
         }
 
-        List<double[]> operations = InitialOperations.getOperations(this.cell, this.design);
-        if (operations == null || operations.isEmpty()) {
+        List<double[]> operations_ = operations;
+        if (operations_ == null || operations_.isEmpty()) {
+            operations_ = InitialOperations.getOperations(this.cell, this.design);
+        }
+
+        if (operations_ == null || operations_.isEmpty()) {
             return;
         }
 
-        for (double[] operation : operations) {
+        for (double[] operation : operations_) {
             if (operation == null) {
                 continue;
             }
@@ -484,6 +488,11 @@ public class AtomsViewer extends AtomsViewerBase<Group> {
     }
 
     public void setCellToCenter() {
+        List<double[]> operations = InitialOperations.getOperations(this.cell, this.design);
+        this.setCellToCenter(operations);
+    }
+
+    private void setCellToCenter(List<double[]> operations) {
         if (this.compassMode) {
             return;
         }
@@ -500,14 +509,14 @@ public class AtomsViewer extends AtomsViewerBase<Group> {
             this.viewerXYZAxis.initialize();
         }
 
-        this.initialOperations();
+        this.initialOperations(operations);
 
         this.busyLinkedViewers = true;
 
         if (this.linkedViewers != null) {
             for (AtomsViewer atomsViewer : this.linkedViewers) {
                 if (atomsViewer != null) {
-                    atomsViewer.setCellToCenter();
+                    atomsViewer.setCellToCenter(operations);
                 }
             }
         }
