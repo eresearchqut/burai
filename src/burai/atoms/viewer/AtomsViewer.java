@@ -522,7 +522,6 @@ public class AtomsViewer extends AtomsViewerBase<Group> {
         }
 
         this.busyLinkedViewers = false;
-
     }
 
     public void setCompassToCenter() {
