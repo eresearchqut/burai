@@ -39,6 +39,8 @@ public final class Environments {
 
     private static final String PROPERTIES_NAME = ".properties";
 
+    private static String osName = null;
+
     private static EnvFile recentsEnvFile = null;
 
     private static EnvFile websitesEnvFile = null;
@@ -54,7 +56,12 @@ public final class Environments {
     }
 
     public static String getOSName() {
-        return System.getProperty("os.name", null);
+        if (osName != null) {
+            return osName;
+        }
+
+        osName = System.getProperty("os.name", null);
+        return osName;
     }
 
     public static boolean isWindows() {

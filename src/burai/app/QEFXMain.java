@@ -14,13 +14,6 @@ import java.io.PrintStream;
 import java.net.URL;
 import java.util.List;
 
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Dialog;
-import javafx.scene.image.Image;
-import javafx.stage.Stage;
 import burai.app.explorer.QEFXExplorer;
 import burai.app.icon.web.WebEngineFactory;
 import burai.app.proxy.ProxyServer;
@@ -29,6 +22,13 @@ import burai.com.file.FileTools;
 import burai.com.life.Life;
 import burai.com.path.QEPath;
 import burai.pseudo.PseudoLibrary;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Dialog;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
 
 public class QEFXMain extends Application {
 
@@ -150,11 +150,24 @@ public class QEFXMain extends Application {
                 QEPath.setMPIPath(new File(dirFile, "mpi"));
             }
 
-        } else if (Environments.isMac()) {
-            File dirFile = new File("exec.MAC");
-            File mpiFile = new File("/opt/local/libexec/openmpi-gcc6");
-            File qeMpiFile = new File(dirFile, "qe_openmpi-gcc6");
-            File qeSerFile = new File(dirFile, "qe_serial-gcc6");
+        } else if (Environments.isMac() || Environments.isLinux()) {
+            File dirFile = null;
+            File mpiFile = null;
+            File qeMpiFile = null;
+            File qeSerFile = null;
+
+            if (Environments.isMac()) {
+                dirFile = new File("exec.MAC");
+                mpiFile = new File("/opt/local/libexec/openmpi-gcc6");
+                qeMpiFile = new File(dirFile, "qe_openmpi-gcc6");
+                qeSerFile = new File(dirFile, "qe_serial-gcc6");
+
+            } else { //if (Environments.isLinux()) {
+                dirFile = new File("exec.LINUX");
+                mpiFile = new File("/opt/local/libexec/openmpi-gcc6");
+                qeMpiFile = new File(dirFile, "qe_openmpi");
+                qeSerFile = new File(dirFile, "qe_serial");
+            }
 
             boolean hasMPI = false;
             try {
