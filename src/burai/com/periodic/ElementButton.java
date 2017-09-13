@@ -10,6 +10,7 @@
 package burai.com.periodic;
 
 import burai.atoms.element.ElementUtil;
+import burai.com.font.FontTools;
 import javafx.scene.control.Button;
 import javafx.scene.control.Dialog;
 import javafx.scene.text.Font;
@@ -17,7 +18,7 @@ import javafx.scene.text.Font;
 public final class ElementButton extends Button {
 
     private static final double TEXT_SIZE = 11.0;
-    private static final String TEXT_FONT = "Times New Roman";
+    private static final String TEXT_FONT = FontTools.getTimesNewRoman();
 
     private Dialog<ElementButton> dialog;
 

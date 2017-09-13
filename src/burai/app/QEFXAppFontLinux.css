@@ -1,0 +1,75 @@
+/*
+ * Copyright (C) 2017 Satomichi Nishihara
+ *
+ * This file is distributed under the terms of the
+ * GNU General Public License. See the file `LICENSE'
+ * in the root directory of the present distribution,
+ * or http://www.gnu.org/copyleft/gpl.txt .
+ */
+
+/* Font Family for Linux */
+
+.logo-text {
+    -fx-font-family: "Arial Black";
+}
+
+.icon-web {
+    -fx-font-family: "Arial Black";
+}
+
+.icon-atoms {
+    -fx-font-family: "Arial Black";
+}
+
+.icon-upf {
+    -fx-font-family: "Arial Black";
+}
+
+.icon-modeler {
+    -fx-font-family: "Arial Black";
+}
+
+.icon-slab {
+    -fx-font-family: "Arial Black";
+}
+
+.result-icon-label {
+    -fx-font-family: "Arial Black";
+}
+
+.result-icon-sublabel {
+    -fx-font-family: "Arial Black";
+}
+
+.result-graph-note-text {
+    -fx-font-family: "Times New Roman";
+}
+
+.result-graph-legend-text {
+    -fx-font-family: "Times New Roman";
+}
+
+.chart-title {
+    -fx-font-family: "Times New Roman";
+}
+
+.chart-legend-item {
+    -fx-font-family: "Times New Roman";
+}
+
+.axis {
+    -fx-tick-label-font-family: "Times New Roman";
+}
+
+.axis-label {
+    -fx-font-family: "Times New Roman";
+}
+
+.coord-field {
+    -fx-font-family: "Times New Roman";
+}
+
+.element-button {
+    -fx-font-family: "Times New Roman";
+}
+

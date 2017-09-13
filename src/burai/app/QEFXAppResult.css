@@ -38,12 +38,14 @@
 }
 
 .result-icon-label {
-    -fx-font: 1.83333em "Arial Black";
+    -fx-font-family: "Arial Black";
+    -fx-font-size: 1.83333em;
     -fx-text-fill: snow;
 }
 
 .result-icon-sublabel {
-    -fx-font: 1.166667em "Arial Black";
+    -fx-font-family: "Arial Black";
+    -fx-font-size: 1.166667em;
     -fx-text-fill: snow;
 }
 

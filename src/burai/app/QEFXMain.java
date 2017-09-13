@@ -43,7 +43,8 @@ public class QEFXMain extends Application {
             "QEFXAppExplorer.css",
             "QEFXAppIcon.css",
             "QEFXAppViewer.css",
-            "QEFXAppResult.css"
+            "QEFXAppResult.css",
+            Environments.isLinux() ? "QEFXAppFontLinux.css" : "QEFXAppFont.css"
     };
 
     private static final String OUT_LOG_NAME = "_logOut.txt";

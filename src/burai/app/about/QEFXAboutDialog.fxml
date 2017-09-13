@@ -1,30 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.*?>
-<?import java.net.*?>
-<?import javafx.scene.media.*?>
-<?import javafx.scene.paint.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.text.*?>
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <Group>
          <children>
             <BorderPane prefWidth="520.0" BorderPane.alignment="CENTER">
                <center>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="BURAI 1.3" BorderPane.alignment="CENTER">
-                     <font>
-                        <Font name="Arial Black" size="48.0" />
-                     </font>
-                  </Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="logo-text" text="BURAI 1.3" BorderPane.alignment="CENTER" />
                </center>
                <bottom>
                   <Label style="-fx-font-family: monospace;" text="Copyright (C) 2016-2017 BURAI-team &lt;nisihara.burai@gmail.com&gt;." BorderPane.alignment="CENTER">

@@ -22,6 +22,7 @@ import burai.atoms.model.event.AtomEventListener;
 import burai.atoms.model.event.CellEvent;
 import burai.atoms.model.event.CellEventListener;
 import burai.atoms.model.event.ModelEvent;
+import burai.com.font.FontTools;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
@@ -32,7 +33,7 @@ public class AtomsSample extends Group implements AtomEventListener, CellEventLi
 
     private static final double BETWEEN_ATOMS = 2.32;
     private static final double TEXT_SIZE = 0.8;
-    private static final String TEXT_FONT = "Times New Roman";
+    private static final String TEXT_FONT = FontTools.getTimesNewRoman();
 
     private Cell cell;
 

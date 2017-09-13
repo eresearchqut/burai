@@ -32,6 +32,11 @@
     -fx-font-weight: bold;
 }
 
+.logo-text {
+    -fx-font-family: "Arial Black";
+    -fx-font-size: 48px;
+}
+
 .save-text {
     -fx-fill: black;
     -fx-font-size: 3.333333em;

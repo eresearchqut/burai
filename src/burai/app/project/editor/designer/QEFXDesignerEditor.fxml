@@ -147,10 +147,7 @@
                   <Label text="Select Element" />
                   <Label fx:id="atomColorLabel" text="Atomic Color" GridPane.rowIndex="1" />
                   <Label fx:id="atomRadiusLabel" text="Atomic Radius" GridPane.rowIndex="2" />
-                  <Button fx:id="elemButton" mnemonicParsing="false" prefWidth="200.0" text="no element" GridPane.columnIndex="1">
-                     <font>
-                        <Font name="Times New Roman Bold" size="14.0" />
-                     </font></Button>
+                  <Button fx:id="elemButton" mnemonicParsing="false" prefWidth="200.0" styleClass="element-button" text="no element" GridPane.columnIndex="1" />
                   <ColorPicker fx:id="atomColorPicker" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <GridPane prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <children>
