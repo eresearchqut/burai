@@ -36,13 +36,4 @@ public final class FontTools {
         }
     }
 
-    public static double getRomanScale() {
-        if (Environments.isLinux()) {
-            return 1.0;
-
-        } else {
-            return 1.0;
-        }
-    }
-
 }

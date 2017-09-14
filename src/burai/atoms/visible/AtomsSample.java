@@ -22,6 +22,7 @@ import burai.atoms.model.event.AtomEventListener;
 import burai.atoms.model.event.CellEvent;
 import burai.atoms.model.event.CellEventListener;
 import burai.atoms.model.event.ModelEvent;
+import burai.com.env.Environments;
 import burai.com.font.FontTools;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -32,7 +33,8 @@ import javafx.scene.text.Text;
 public class AtomsSample extends Group implements AtomEventListener, CellEventListener {
 
     private static final double BETWEEN_ATOMS = 2.32;
-    private static final double TEXT_SIZE = 0.8 * FontTools.getRomanScale();
+    private static final double TEXT_SIZE = Environments.isLinux() ? 1.0 : 0.8;
+    private static final double TEXT_SCALE = Environments.isLinux() ? 0.8 : 1.0;
     private static final String TEXT_FONT = FontTools.getRomanFont();
 
     private Cell cell;
@@ -168,6 +170,9 @@ public class AtomsSample extends Group implements AtomEventListener, CellEventLi
         sampleText.setWrappingWidth(5.0 * TEXT_SIZE);
         sampleText.setTranslateX(0.60 * BETWEEN_ATOMS);
         sampleText.setTranslateY(y + 0.15 * BETWEEN_ATOMS);
+        sampleText.setScaleX(TEXT_SCALE);
+        sampleText.setScaleY(TEXT_SCALE);
+
         this.sampleTexts.add(sampleText);
         this.getChildren().add(sampleText);
 

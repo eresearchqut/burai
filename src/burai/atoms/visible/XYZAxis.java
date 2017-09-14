@@ -10,6 +10,7 @@
 package burai.atoms.visible;
 
 import burai.atoms.design.Design;
+import burai.com.env.Environments;
 import burai.com.font.FontTools;
 import javafx.geometry.Point3D;
 import javafx.scene.Group;
@@ -25,7 +26,8 @@ public class XYZAxis extends Group {
 
     private static final double CYLINDER_RADIUS = 0.03;
     private static final double CYLINDER_HEIGHT = 1.00;
-    private static final double TEXT_SIZE = 0.50 * FontTools.getRomanScale();
+    private static final double TEXT_SIZE = Environments.isLinux() ? 1.0 : 0.5;
+    private static final double TEXT_SCALE = Environments.isLinux() ? 0.5 : 1.0;
     private static final String TEXT_FONT = FontTools.getRomanFont();
 
     private Design design;
@@ -58,6 +60,8 @@ public class XYZAxis extends Group {
         text.setTranslateY(0.10 * TEXT_SIZE + CYLINDER_HEIGHT);
         text.setRotationAxis(Rotate.Z_AXIS);
         text.setRotate(180.0);
+        text.setScaleX(TEXT_SCALE);
+        text.setScaleY(TEXT_SCALE);
 
         if (this.design != null) {
             Color fontColor = this.design.getFontColor();
