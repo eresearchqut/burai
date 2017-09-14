@@ -38,6 +38,9 @@
                <padding>
                   <Insets left="35.0" />
                </padding>
+               <GridPane.margin>
+                  <Insets bottom="6.0" />
+               </GridPane.margin>
             </Label>
          </children>
          <columnConstraints>
@@ -49,9 +52,6 @@
          <rowConstraints>
             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
          </rowConstraints>
-         <VBox.margin>
-            <Insets bottom="5.0" />
-         </VBox.margin>
       </GridPane>
       <BorderPane prefWidth="435.0">
          <center>
