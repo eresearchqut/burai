@@ -28,7 +28,8 @@ public final class FontTools {
 
     public static String getRomanFont() {
         if (Environments.isLinux()) {
-            return "Nimbus Roman No9 L";
+            //return "Nimbus Roman No9 L";
+            return "FreeSerif";
 
         } else {
             return "Times New Roman";

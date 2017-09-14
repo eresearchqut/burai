@@ -42,34 +42,34 @@
 }
 
 .result-graph-note-text {
-    -fx-font-family: "Nimbus Roman No9 L";
+    -fx-font-family: "FreeSerif";
 }
 
 .result-graph-legend-text {
-    -fx-font-family: "Nimbus Roman No9 L";
+    -fx-font-family: "FreeSerif";
 }
 
 .chart-title {
-    -fx-font-family: "Nimbus Roman No9 L";
+    -fx-font-family: "FreeSerif";
 }
 
 .chart-legend-item {
-    -fx-font-family: "Nimbus Roman No9 L";
+    -fx-font-family: "FreeSerif";
 }
 
 .axis {
-    -fx-tick-label-font-family: "Nimbus Roman No9 L";
+    -fx-tick-label-font-family: "FreeSerif";
 }
 
 .axis-label {
-    -fx-font-family: "Nimbus Roman No9 L";
+    -fx-font-family: "FreeSerif";
 }
 
 .coord-field {
-    -fx-font-family: "Nimbus Roman No9 L";
+    -fx-font-family: "FreeSerif";
 }
 
 .element-button {
-    -fx-font-family: "Nimbus Roman No9 L";
+    -fx-font-family: "FreeSerif";
 }
 
