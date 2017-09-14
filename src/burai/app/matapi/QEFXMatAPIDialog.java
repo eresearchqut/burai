@@ -15,7 +15,6 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import burai.app.QEFXMain;
-import burai.com.env.Environments;
 import burai.com.graphic.ToggleGraphics;
 import burai.matapi.MaterialsAPILoader;
 import javafx.fxml.FXML;
@@ -115,10 +114,6 @@ public class QEFXMatAPIDialog extends Dialog<ButtonType> implements Initializabl
         text = text + System.lineSeparator();
         text = text + "       e.g.  Fe2O3";
         text = text + System.lineSeparator();
-
-        if (Environments.isLinux()) {
-            text = text + System.lineSeparator();
-        }
 
         this.usageLabel.setText(text);
     }
