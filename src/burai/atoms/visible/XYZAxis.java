@@ -25,7 +25,7 @@ public class XYZAxis extends Group {
 
     private static final double CYLINDER_RADIUS = 0.03;
     private static final double CYLINDER_HEIGHT = 1.00;
-    private static final double TEXT_SIZE = 0.50;
+    private static final double TEXT_SIZE = 0.50 * FontTools.getRomanScale();
     private static final String TEXT_FONT = FontTools.getRomanFont();
 
     private Design design;

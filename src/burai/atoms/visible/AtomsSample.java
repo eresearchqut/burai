@@ -32,7 +32,7 @@ import javafx.scene.text.Text;
 public class AtomsSample extends Group implements AtomEventListener, CellEventListener {
 
     private static final double BETWEEN_ATOMS = 2.32;
-    private static final double TEXT_SIZE = 0.8;
+    private static final double TEXT_SIZE = 0.8 * FontTools.getRomanScale();
     private static final String TEXT_FONT = FontTools.getRomanFont();
 
     private Cell cell;
