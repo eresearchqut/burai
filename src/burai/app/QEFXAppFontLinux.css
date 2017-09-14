@@ -10,66 +10,66 @@
 /* Font Family for Linux */
 
 .logo-text {
-    -fx-font-family: "Arial Black";
+    -fx-font-family: "Noto Sans CJK JP Black";
 }
 
 .icon-web {
-    -fx-font-family: "Arial Black";
+    -fx-font-family: "Noto Sans CJK JP Black";
 }
 
 .icon-atoms {
-    -fx-font-family: "Arial Black";
+    -fx-font-family: "Noto Sans CJK JP Black";
 }
 
 .icon-upf {
-    -fx-font-family: "Arial Black";
+    -fx-font-family: "Noto Sans CJK JP Black";
 }
 
 .icon-modeler {
-    -fx-font-family: "Arial Black";
+    -fx-font-family: "Noto Sans CJK JP Black";
 }
 
 .icon-slab {
-    -fx-font-family: "Arial Black";
+    -fx-font-family: "Noto Sans CJK JP Black";
 }
 
 .result-icon-label {
-    -fx-font-family: "Arial Black";
+    -fx-font-family: "Noto Sans CJK JP Black";
 }
 
 .result-icon-sublabel {
-    -fx-font-family: "Arial Black";
+    -fx-font-family: "Noto Sans CJK JP Black";
 }
 
 .result-graph-note-text {
-    -fx-font-family: "Times New Roman";
+    -fx-font-family: "Nimbus Roman No9 L";
 }
 
 .result-graph-legend-text {
-    -fx-font-family: "Times New Roman";
+    -fx-font-family: "Nimbus Roman No9 L";
 }
 
 .chart-title {
-    -fx-font-family: "Times New Roman";
+    -fx-font-family: "Nimbus Roman No9 L";
 }
 
 .chart-legend-item {
-    -fx-font-family: "Times New Roman";
+    -fx-font-family: "Nimbus Roman No9 L";
 }
 
 .axis {
-    -fx-tick-label-font-family: "Times New Roman";
+    -fx-tick-label-font-family: "Nimbus Roman No9 L";
 }
 
 .axis-label {
-    -fx-font-family: "Times New Roman";
+    -fx-font-family: "Nimbus Roman No9 L";
 }
 
 .coord-field {
-    -fx-font-family: "Times New Roman";
+    -fx-font-family: "Nimbus Roman No9 L";
 }
 
 .element-button {
-    -fx-font-family: "Times New Roman";
+    -fx-font-family: "Nimbus Roman No9 L";
 }
 

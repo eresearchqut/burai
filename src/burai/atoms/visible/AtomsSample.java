@@ -33,7 +33,7 @@ public class AtomsSample extends Group implements AtomEventListener, CellEventLi
 
     private static final double BETWEEN_ATOMS = 2.32;
     private static final double TEXT_SIZE = 0.8;
-    private static final String TEXT_FONT = FontTools.getTimesNewRoman();
+    private static final String TEXT_FONT = FontTools.getRomanFont();
 
     private Cell cell;
 

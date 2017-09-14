@@ -18,7 +18,7 @@ import javafx.scene.text.Font;
 public final class ElementButton extends Button {
 
     private static final double TEXT_SIZE = 11.0;
-    private static final String TEXT_FONT = FontTools.getTimesNewRoman();
+    private static final String TEXT_FONT = FontTools.getRomanFont();
 
     private Dialog<ElementButton> dialog;
 

@@ -17,20 +17,18 @@ public final class FontTools {
         // NOP
     }
 
-    public static String getArialBlack() {
+    public static String getBlackFont() {
         if (Environments.isLinux()) {
-            // TODO
-            return "";
+            return "Noto Sans CJK JP Black";
 
         } else {
             return "Arial Black";
         }
     }
 
-    public static String getTimesNewRoman() {
+    public static String getRomanFont() {
         if (Environments.isLinux()) {
-            // TODO
-            return "";
+            return "Nimbus Roman No9 L";
 
         } else {
             return "Times New Roman";
