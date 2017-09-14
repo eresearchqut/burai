@@ -9,6 +9,10 @@
 
 /* Font Family for Linux */
 
+.root {
+    -fx-font-family: "Ubuntu";
+}
+
 .logo-text {
     -fx-font-family: "Noto Sans CJK JP Black";
 }
