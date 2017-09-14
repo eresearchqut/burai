@@ -165,8 +165,8 @@ public class QEFXMain extends Application {
         File mpiDir = null;
         File qeMpiFile = null;
         File qeSerFile = null;
-        boolean hasMPI = false;
-        boolean hasSer = false;
+        boolean canMPI = false;
+        boolean canSer = false;
 
         if (Environments.isMac()) {
             File execDir = new File("exec.MAC");
@@ -176,19 +176,20 @@ public class QEFXMain extends Application {
             try {
                 mpiDir = new File("/opt/local/libexec/openmpi-gcc6");
                 if (mpiDir.isDirectory()) {
-                    hasMPI = true;
+                    canMPI = true;
                 }
             } catch (Exception e) {
-                hasMPI = false;
+                canMPI = false;
             }
 
-            hasSer = true;
+            canSer = true;
 
         } else { //if (Environments.isLinux()) {
             File execDir = new File("exec.LINUX");
             qeMpiFile = new File(execDir, "qe_openmpi");
             qeSerFile = new File(execDir, "qe_serial");
 
+            boolean hasMPI = false;
             try {
                 File mpiFile = new File("/usr/bin/mpirun");
                 if (mpiFile.isFile()) {
@@ -199,17 +200,21 @@ public class QEFXMain extends Application {
                 hasMPI = false;
             }
 
+            boolean hasGcc = false;
             try {
                 File gccFile = new File("/usr/bin/gfortran");
                 if (gccFile.isFile()) {
-                    hasSer = true;
+                    hasGcc = true;
                 }
             } catch (Exception e) {
-                hasSer = false;
+                hasGcc = false;
             }
+
+            canMPI = hasMPI && hasGcc;
+            canSer = hasGcc;
         }
 
-        if (hasMPI) {
+        if (canMPI && mpiDir != null) {
             String qePath = QEPath.getPath();
             String qeSerPath = qeSerFile.getAbsolutePath();
             if (qePath == null || qePath.trim().isEmpty() || qePath.equals(qeSerPath)) {
@@ -221,7 +226,7 @@ public class QEFXMain extends Application {
                 QEPath.setMPIPath(mpiDir);
             }
 
-        } else if (hasSer) {
+        } else if (canSer) {
             String qePath = QEPath.getPath();
             if (qePath == null || qePath.trim().isEmpty()) {
                 QEPath.setPath(qeSerFile);
