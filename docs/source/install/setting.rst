@@ -24,7 +24,7 @@ Setting
        > sudo port install openmpi-gcc6
        > sudo port select --set mpi openmpi-gcc6-fortran
 
-   If you want to use precompiled executables of QE for Ubuntu,
+5. If you want to use precompiled executables of QE for Ubuntu,
    GFortran and OpenMPI have to be installed through apt-get as.
 
   .. code-block:: c
