@@ -34,13 +34,10 @@
       </BorderPane>
       <GridPane hgap="5.0" prefWidth="435.0" vgap="5.0">
          <children>
-            <Label fx:id="usageLabel" text="usage" wrapText="true">
+            <Label fx:id="usageLabel" ellipsisString="" text="usage" wrapText="true">
                <padding>
                   <Insets left="35.0" />
                </padding>
-               <GridPane.margin>
-                  <Insets bottom="6.0" />
-               </GridPane.margin>
             </Label>
          </children>
          <columnConstraints>

@@ -114,6 +114,7 @@ public class QEFXMatAPIDialog extends Dialog<ButtonType> implements Initializabl
         text = text + System.lineSeparator();
         text = text + "       e.g.  Fe2O3";
         text = text + System.lineSeparator();
+        text = text + System.lineSeparator();
 
         this.usageLabel.setText(text);
     }
