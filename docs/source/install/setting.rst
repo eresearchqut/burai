@@ -31,3 +31,5 @@ Setting
 
        > sudo apt-get install gfortran
        > sudo apt-get install openmpi-bin libopenmpi-dev
+
+6. For Ubuntu, executing BURAI1.3/makeLauncher.sh yields the launcher BURAI.desktop .
