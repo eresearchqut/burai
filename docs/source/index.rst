@@ -24,7 +24,7 @@ License
 Runtime Environment
 -------------------
 
-- Windows 10 (recommended) or Mac OS X 10.12
+- Windows 10 (recommended), Mac OS X 10.12 or Ubuntu 16.04.3 LTS
 - JRE1.8 or later version
 
 Web Page
