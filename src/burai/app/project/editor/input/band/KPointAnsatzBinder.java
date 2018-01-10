@@ -13,10 +13,10 @@ import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 
-import javafx.scene.control.TableView;
 import burai.input.card.QECardEvent;
 import burai.input.card.QEKPoint;
 import burai.input.card.QEKPoints;
+import javafx.scene.control.TableView;
 
 public class KPointAnsatzBinder {
 
@@ -26,7 +26,7 @@ public class KPointAnsatzBinder {
 
     private QEKPoints kpointsCard;
 
-    private boolean busyKxyz;
+    private boolean busyKPoint;
 
     public KPointAnsatzBinder(TableView<KPointAnsatz> kpointTable, QEKPoints kpointsCard) {
         if (kpointTable == null) {
@@ -39,7 +39,7 @@ public class KPointAnsatzBinder {
 
         this.kpointTable = kpointTable;
         this.kpointsCard = kpointsCard;
-        this.busyKxyz = false;
+        this.busyKPoint = false;
     }
 
     public void bindTable() {
@@ -98,7 +98,7 @@ public class KPointAnsatzBinder {
     }
 
     private void actionOnKPointAnsatzChanged(KPointAnsatz kpointAnsatz) {
-        if (this.busyKxyz) {
+        if (this.busyKPoint) {
             return;
         }
 
@@ -175,7 +175,7 @@ public class KPointAnsatzBinder {
 
     private void setupKPointsCard() {
         this.kpointsCard.addListener(event -> {
-            if (this.busyKxyz) {
+            if (this.busyKPoint) {
                 return;
             }
 
@@ -233,23 +233,24 @@ public class KPointAnsatzBinder {
             return;
         }
 
+        this.busyKPoint = true;
+
         String symbol = kpoint.hasLetter() ? kpoint.getLetter() : null;
         if (symbol == null || symbol.isEmpty()) {
-            this.busyKxyz = true;
             kpointAnsatz.setSymbol("");
             kpointAnsatz.setKx(kpoint.getX());
             kpointAnsatz.setKy(kpoint.getY());
             kpointAnsatz.setKz(kpoint.getZ());
-            this.busyKxyz = false;
         } else {
-            this.busyKxyz = true;
             kpointAnsatz.setSymbol(symbol);
             kpointAnsatz.setKx("");
             kpointAnsatz.setKy("");
             kpointAnsatz.setKz("");
-            this.busyKxyz = false;
         }
+
         kpointAnsatz.setNk((int) (kpoint.getWeight() + DELTA_WEIGHT));
+
+        this.busyKPoint = false;
     }
 
     private void actionOnKPointAdded(int index) {
@@ -350,15 +351,19 @@ public class KPointAnsatzBinder {
             return;
         }
 
+        this.busyKPoint = true;
+
         if (symbol == null || symbol.isEmpty()) {
-            return;
+            kpointAnsatz.setSymbol("");
+        } else {
+            kpointAnsatz.setSymbol(symbol);
+            kpointAnsatz.setKx("");
+            kpointAnsatz.setKy("");
+            kpointAnsatz.setKz("");
         }
 
-        this.busyKxyz = true;
-        kpointAnsatz.setSymbol(symbol);
-        kpointAnsatz.setKx("");
-        kpointAnsatz.setKy("");
-        kpointAnsatz.setKz("");
-        this.busyKxyz = false;
+        this.busyKPoint = false;
+
+        this.actionOnKPointAnsatzChanged(kpointAnsatz);
     }
 }
