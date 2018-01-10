@@ -156,6 +156,10 @@ public enum RunningType {
                 nmlControl.setValue("wf_collect = .TRUE.");
             }
 
+            if (nmlControl.getValue("verbosity") != null) {
+                nmlControl.removeValue("verbosity");
+            }
+
             nmlControl.setValue("outdir = ./");
             nmlControl.setValue("wfcdir = ./");
             nmlControl.setValue("pseudo_dir = '" + Environments.getPseudosPath() + "'");
