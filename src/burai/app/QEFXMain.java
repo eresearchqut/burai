@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.PrintStream;
 import java.net.URL;
 import java.util.List;
+import java.util.Locale;
 
 import burai.app.explorer.QEFXExplorer;
 import burai.app.icon.web.WebEngineFactory;
@@ -96,6 +97,8 @@ public class QEFXMain extends Application {
 
     @Override
     public void init() {
+        Locale.setDefault(Locale.ENGLISH);
+
         if (Environments.existsProjectsPath()) {
             this.setLogFiles();
 
