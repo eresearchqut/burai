@@ -60,10 +60,30 @@ public class FermiParser extends LogParser {
                 line = line.trim();
 
                 String strFermi = null;
+
                 if (line.startsWith("the Fermi energy")) {
                     String[] subLines = line.split("\\s+");
                     if (subLines != null && subLines.length > 4) {
                         strFermi = subLines[4];
+                    }
+
+                } else if (line.startsWith("highest occupied")) {
+                    String[] subLines = line.split(":");
+
+                    String line2 = null;
+                    if (subLines != null && subLines.length > 1) {
+                        line2 = subLines[1];
+                    }
+                    if (line2 != null) {
+                        line2 = line2.trim();
+                    }
+
+                    String[] subLines2 = null;
+                    if (line2 != null && !line2.isEmpty()) {
+                        subLines2 = line2.split("\\s+");
+                    }
+                    if (subLines2 != null && subLines2.length > 0) {
+                        strFermi = subLines2[0];
                     }
                 }
 
