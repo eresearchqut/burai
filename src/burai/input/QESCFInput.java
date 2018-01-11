@@ -26,6 +26,8 @@ import burai.input.namelist.tracer.QESpinTracer;
 
 public class QESCFInput extends QESecondaryInput {
 
+    private QESpeciesTracer speciesTracer;
+
     public QESCFInput() {
         super();
     }
@@ -79,16 +81,27 @@ public class QESCFInput extends QESecondaryInput {
         QECard card = this.cards.get(QEAtomicSpecies.CARD_NAME);
         boolean hasSpeciesCards = (card != null) && (card instanceof QEAtomicSpecies);
 
+        if (hasSpeciesCards) {
+            if (this.speciesTracer != null) {
+                this.speciesTracer.stopTracer();
+            }
+        }
+
         this.setupCard(new QEKPoints(), reader);
         this.setupCard(new QECellParameters(), reader);
         this.setupCard(new QEAtomicSpecies(), reader);
         this.setupCard(new QEAtomicPositions(), reader);
 
-        if (!hasSpeciesCards) {
+        if (hasSpeciesCards) {
+            if (this.speciesTracer != null) {
+                this.speciesTracer.restartTracer();
+            }
+
+        } else {
             QENamelist nmlSystem = this.namelists.get(NAMELIST_SYSTEM);
             QEAtomicSpecies atomicSpecies = (QEAtomicSpecies) this.cards.get(QEAtomicSpecies.CARD_NAME);
-            QESpeciesTracer speciesTracer = new QESpeciesTracer(nmlSystem, atomicSpecies);
-            speciesTracer.traceAtomicSpecies();
+            this.speciesTracer = new QESpeciesTracer(nmlSystem, atomicSpecies);
+            this.speciesTracer.traceAtomicSpecies();
         }
     }
 

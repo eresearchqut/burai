@@ -39,6 +39,10 @@ public class QESpeciesTracer implements QECardListener {
         }
     }
 
+    private boolean stopped;
+
+    private boolean busySpecies;
+
     private QENamelist nmlSystem;
 
     private QEAtomicSpecies atomicSpecies;
@@ -54,9 +58,25 @@ public class QESpeciesTracer implements QECardListener {
             throw new IllegalArgumentException("atomicSpecies is null.");
         }
 
+        this.stopped = false;
+        this.busySpecies = false;
+
         this.nmlSystem = nmlSystem;
         this.atomicSpecies = atomicSpecies;
         this.atomicValues = null;
+    }
+
+    public void stopTracer() {
+        this.stopped = true;
+    }
+
+    public void restartTracer() {
+        this.stopped = false;
+
+        int numSpecs = this.atomicSpecies.numSpecies();
+        for (int i = 0; i < numSpecs; i++) {
+            this.storeAtomicValues(i);
+        }
     }
 
     public void traceAtomicSpecies() {
@@ -83,10 +103,28 @@ public class QESpeciesTracer implements QECardListener {
 
     @Override
     public void onCardChanged(QECardEvent event) {
+        if (this.stopped) {
+            return;
+        }
+
+        this.busySpecies = true;
         this.restoreAtomicValues();
+        this.busySpecies = false;
     }
 
     private void storeAtomicValues(int index) {
+        if (this.stopped) {
+            return;
+        }
+
+        if (this.busySpecies) {
+            return;
+        }
+
+        if (this.nmlSystem.isClearing()) {
+            return;
+        }
+
         if (this.atomicValues == null) {
             this.atomicValues = new HashMap<String, AtomicValue>();
         }

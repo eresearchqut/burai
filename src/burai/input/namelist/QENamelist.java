@@ -32,6 +32,8 @@ public class QENamelist {
 
     private List<QEValue> bindingValues;
 
+    private boolean clearing;
+
     public QENamelist(String listName) {
         if (listName == null || listName.isEmpty()) {
             throw new IllegalArgumentException("name of namelist is null or empty.");
@@ -43,6 +45,7 @@ public class QENamelist {
         this.protectedValues = null;
         this.deletingValues = null;
         this.bindingValues = null;
+        this.clearing = false;
     }
 
     public void addListener(String name, QEValueListener listener) {
@@ -403,12 +406,20 @@ public class QENamelist {
         }
     }
 
+    public boolean isClearing() {
+        return this.clearing;
+    }
+
     public void clear() {
+        this.clearing = true;
+
         //this.qeValues.clear();
         QEValue[] qeValueList = this.qeValues.toArray(new QEValue[this.qeValues.size()]);
         for (QEValue qeValue : qeValueList) {
             this.removeValue(qeValue);
         }
+
+        this.clearing = false;
     }
 
     @Override
