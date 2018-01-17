@@ -30,6 +30,7 @@ public final class SVGLibrary {
         ARROW_LEFT(SVGItemArrowLeft.WIDTH, SVGItemArrowLeft.HEIGHT, 0.0, SVGItemArrowLeft.CONTENT),
         ARROW_RIGHT(SVGItemArrowLeft.WIDTH, SVGItemArrowLeft.HEIGHT, 180.0, SVGItemArrowLeft.CONTENT),
         ARROW_ROUND(SVGItemArrowRound.WIDTH, SVGItemArrowRound.HEIGHT, SVGItemArrowRound.CONTENT),
+        CALCULATOR(SVGItemCalculator.WIDTH, SVGItemCalculator.HEIGHT, SVGItemCalculator.CONTENT),
         CAMERA(SVGItemCamera.WIDTH, SVGItemCamera.HEIGHT, SVGItemCamera.CONTENT),
         CENTER(SVGItemCenter.WIDTH, SVGItemCenter.HEIGHT, SVGItemCenter.CONTENT),
         CHECK(SVGItemCheck.WIDTH, SVGItemCheck.HEIGHT, SVGItemCheck.CONTENT),
