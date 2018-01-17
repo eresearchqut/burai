@@ -9,12 +9,12 @@
 
 package burai.app.project.editor.input.items;
 
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.util.Callback;
 import burai.com.math.Calculator;
 import burai.input.namelist.QEReal;
 import burai.input.namelist.QEValueBuffer;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.util.Callback;
 
 public class QEFXTextFieldDouble extends QEFXTextField {
 
@@ -35,6 +35,8 @@ public class QEFXTextFieldDouble extends QEFXTextField {
 
     private Callback<String, String> textFactoryInner;
 
+    private Callback<String, String> valueFactoryDefault;
+
     public QEFXTextFieldDouble(QEValueBuffer valueBuffer, TextField controlItem) {
         super(valueBuffer, controlItem);
 
@@ -47,9 +49,34 @@ public class QEFXTextFieldDouble extends QEFXTextField {
 
         this.unit = null;
 
+        this.setupFactorys();
+
         this.setHintMessage(null);
 
         this.setupWarnning();
+    }
+
+    private void setupFactorys() {
+        this.valueFactoryInner = null;
+
+        this.textFactoryInner = null;
+
+        this.valueFactoryDefault = (text) -> {
+            if (text == null) {
+                return null;
+            }
+
+            String value = null;
+            try {
+                double dbleText = Calculator.expr(text);
+                value = Double.toString(dbleText);
+            } catch (NumberFormatException e) {
+                value = text;
+            }
+            return value;
+        };
+
+        this.valueFactory = this.valueFactoryDefault;
     }
 
     private void setupWarnning() {
@@ -189,11 +216,22 @@ public class QEFXTextFieldDouble extends QEFXTextField {
 
     public void setUnit(QEFXUnit unit) {
         if (this.unit == null && unit != null) {
+            if (this.valueFactory == this.valueFactoryDefault) {
+                this.valueFactory = null;
+            }
+
             this.valueFactoryInner = this.valueFactory;
             this.textFactoryInner = this.textFactory;
+
         } else if (this.unit != null && unit == null) {
             this.valueFactory = this.valueFactoryInner;
             this.textFactory = this.textFactoryInner;
+            this.valueFactoryInner = null;
+            this.textFactoryInner = null;
+
+            if (this.valueFactory == null) {
+                this.valueFactory = this.valueFactoryDefault;
+            }
         }
 
         this.unit = unit;
