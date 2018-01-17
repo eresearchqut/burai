@@ -19,10 +19,6 @@ public final class Calculator {
     }
 
     public static double expr(String formula) throws NullPointerException, NumberFormatException {
-        if (formula == null) {
-            throw new NullPointerException("formula is null.");
-        }
-
         /*
          * Supported Functions
          * ----------------------------------------------------
@@ -47,13 +43,43 @@ public final class Calculator {
          * signum: signum function
          */
 
+        if (formula == null) {
+            throw new NullPointerException("formula is null.");
+        }
+
+        String formula2 = formula.trim();
+        if (formula2.isEmpty()) {
+            throw new NumberFormatException("formula is empty.");
+        }
+
+        formula2 = formula2.toLowerCase();
+        if (formula2.charAt(0) == 'd') {
+            throw new NumberFormatException("formula starts with `D'.");
+        }
+
+        formula2 = formula2.replace('d', 'e');
+
         try {
-            String formula2 = formula.toLowerCase().replace('d', 'e');
             Expression objExpr = new ExpressionBuilder(formula2).build();
             return objExpr.evaluate();
 
         } catch (Exception e) {
             throw new NumberFormatException(e.getMessage());
         }
+    }
+
+    public static boolean isFormula(String formula) {
+        if (formula == null || formula.isEmpty()) {
+            return false;
+        }
+
+        try {
+            Calculator.expr(formula);
+
+        } catch (NumberFormatException e) {
+            return false;
+        }
+
+        return true;
     }
 }

@@ -47,7 +47,7 @@ public class QEKPoint {
         }
     }
 
-    public QEKPoint(String line) {
+    public QEKPoint(String line) throws NumberFormatException {
         if (line == null) {
             throw new IllegalArgumentException("line is null.");
         }
@@ -58,10 +58,8 @@ public class QEKPoint {
         }
 
         boolean letterMode = false;
-        try {
-            Calculator.expr(subLines[0]);
-        } catch (Exception e) {
-            letterMode = true;
+        if (subLines[0] != null) {
+            letterMode = (!Calculator.isFormula(subLines[0]));
         }
 
         if (!letterMode) {
@@ -72,7 +70,7 @@ public class QEKPoint {
                 this.weight = Calculator.expr(subLines[3]);
                 this.letter = null;
             } catch (Exception e) {
-                throw new IllegalArgumentException("line is incorrect: " + line.trim());
+                throw new NumberFormatException("line is incorrect: " + line.trim());
             }
 
         } else {
@@ -83,7 +81,7 @@ public class QEKPoint {
                 this.weight = Calculator.expr(subLines[1]);
                 this.letter = subLines[0].trim();
             } catch (Exception e) {
-                throw new IllegalArgumentException("line is incorrect: " + line.trim());
+                throw new NumberFormatException("line is incorrect: " + line.trim());
             }
         }
     }
