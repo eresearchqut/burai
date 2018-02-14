@@ -20,6 +20,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import burai.app.QEFXMain;
+import burai.com.env.Environments;
+import burai.ver.Version;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -31,9 +34,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import burai.app.QEFXMain;
-import burai.com.env.Environments;
-import burai.ver.Version;
 
 public class QEFXAboutDialog extends Dialog<ButtonType> implements Initializable {
 
@@ -132,16 +132,12 @@ public class QEFXAboutDialog extends Dialog<ButtonType> implements Initializable
         message = message + "LICENSE:" + ls;
         message = message + "----------------------------------------------------------------------------" + ls;
         message = message + "  BURAI is free software; you can redistribute it and/or modify" + ls;
-        message = message + "  it under the terms of the GNU General Public License as published by" + ls;
-        message = message + "  the Free Software Foundation, version 3 of the License." + ls;
+        message = message + "  it under the terms of the Apache License, Version 2.0." + ls;
         message = message + ls;
         message = message + "  This program is distributed in the hope that it will be useful," + ls;
         message = message + "  but WITHOUT ANY WARRANTY; without even the implied warranty of" + ls;
-        message = message + "  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the" + ls;
-        message = message + "  GNU General Public License for more details." + ls;
-        message = message + ls;
-        message = message + "  You should have received a copy of the GNU General Public License" + ls;
-        message = message + "  along with this program.  If not, see <http://www.gnu.org/licenses/>." + ls;
+        message = message + "  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE." + ls;
+        message = message + "  See <http://www.apache.org/licenses/LICENSE-2.0>, for more details." + ls;
         message = message + "----------------------------------------------------------------------------" + ls;
 
         this.textArea.setText(message);
