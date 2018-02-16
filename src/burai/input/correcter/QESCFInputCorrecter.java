@@ -18,6 +18,7 @@ package burai.input.correcter;
 
 import burai.atoms.element.ElementUtil;
 import burai.input.QEInput;
+import burai.input.correcter.SpinCorrector.SpinType;
 import burai.input.namelist.QEValue;
 
 public class QESCFInputCorrecter extends QEInputCorrecter {
@@ -310,7 +311,17 @@ public class QESCFInputCorrecter extends QEInputCorrecter {
             if (nspinValue == null && noncolinValue == null) {
                 if (this.hasTransitionMetals()) {
                     this.correctTransitionMetals();
-                    this.nmlSystem.setValue("nspin = 2");
+                }
+
+                SpinCorrector corrector = new SpinCorrector(this.input);
+                if (corrector.isAvailable()) {
+                    SpinType spinType = corrector.getSpinType();
+                    if (spinType == SpinType.COLINEAR) {
+                        this.nmlSystem.setValue("nspin = 2");
+                    } else if (spinType == SpinType.NON_COLINEAR) {
+                        this.nmlSystem.setValue("noncolin = .true.");
+                        this.nmlSystem.setValue("lspinorb = .true.");
+                    }
                 }
             }
         }
