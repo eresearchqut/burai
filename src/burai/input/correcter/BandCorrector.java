@@ -21,11 +21,15 @@ import burai.input.QEInput;
 import burai.input.card.QEAtomicPositions;
 import burai.input.card.QEAtomicSpecies;
 import burai.input.card.QECard;
+import burai.input.namelist.QENamelist;
+import burai.input.namelist.QEValue;
 import burai.pseudo.PseudoPotential;
 
 public class BandCorrector {
 
     private QEInput input;
+
+    private QENamelist nmlSystem;
 
     private QEAtomicSpecies cardSpecies;
 
@@ -37,6 +41,8 @@ public class BandCorrector {
         }
 
         this.input = input;
+
+        this.nmlSystem = this.input.getNamelist(QEInput.NAMELIST_SYSTEM);
 
         QECard card = null;
 
@@ -104,6 +110,13 @@ public class BandCorrector {
             String name = this.cardPositions.getLabel(i);
             int index = this.cardSpecies.indexOfSpecies(name);
             nbands += nbandList[index];
+        }
+
+        if (this.nmlSystem != null) {
+            QEValue value = this.nmlSystem.getValue("noncolin");
+            if (value != null && value.getLogicalValue()) {
+                nbands *= 2;
+            }
         }
 
         return nbands;
