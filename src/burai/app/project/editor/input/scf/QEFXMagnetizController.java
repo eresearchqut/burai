@@ -19,16 +19,6 @@ package burai.app.project.editor.input.scf;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
 import burai.app.QEFXMainController;
 import burai.app.project.editor.input.QEFXInputController;
 import burai.app.project.editor.input.items.QEFXComboInteger;
@@ -39,10 +29,22 @@ import burai.atoms.element.ElementUtil;
 import burai.input.QEInput;
 import burai.input.card.QEAtomicSpecies;
 import burai.input.card.QECard;
+import burai.input.correcter.SpinCorrector;
+import burai.input.correcter.SpinCorrector.SpinType;
 import burai.input.namelist.QENamelist;
 import burai.input.namelist.QEValue;
 import burai.input.namelist.QEValueBase;
 import burai.input.namelist.QEValueBuffer;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 
 public class QEFXMagnetizController extends QEFXInputController {
 
@@ -62,6 +64,8 @@ public class QEFXMagnetizController extends QEFXInputController {
     @FXML
     private Button polarizButton;
 
+    private QEFXComboInteger polarizItem;
+
     /*
      * spin-orbit
      */
@@ -73,6 +77,8 @@ public class QEFXMagnetizController extends QEFXInputController {
 
     @FXML
     private Button spinorbitButton;
+
+    private QEFXToggleBoolean spinorbitItem;
 
     /*
      * fixing method
@@ -147,7 +153,21 @@ public class QEFXMagnetizController extends QEFXInputController {
 
     public QEFXMagnetizController(QEFXMainController mainController, QEInput input) {
         super(mainController, input);
+
+        this.polarizItem = null;
+        this.spinorbitItem = null;
+
         this.elementBinder = null;
+    }
+
+    public void updateSpinStatus() {
+        if (this.polarizItem != null) {
+            this.polarizItem.pullAllTriggers();
+        }
+
+        if (this.spinorbitItem != null) {
+            this.spinorbitItem.pullAllTriggers();
+        }
     }
 
     @Override
@@ -155,8 +175,9 @@ public class QEFXMagnetizController extends QEFXInputController {
         QENamelist nmlSystem = this.input.getNamelist(QEInput.NAMELIST_SYSTEM);
 
         if (nmlSystem != null) {
-            this.setupPolarizationItem(nmlSystem);
-            this.setupSpinOrbitItem(nmlSystem);
+            SpinCorrector spinCorrector = new SpinCorrector(this.input);
+            this.setupPolarizationItem(nmlSystem, spinCorrector);
+            this.setupSpinOrbitItem(nmlSystem, spinCorrector);
             this.setupFixingMethodItem(nmlSystem);
             this.setupMagnetizXItem(nmlSystem);
             this.setupMagnetizYItem(nmlSystem);
@@ -173,20 +194,37 @@ public class QEFXMagnetizController extends QEFXInputController {
         this.setupElementTable();
     }
 
-    private void setupPolarizationItem(QENamelist nmlSystem) {
+    private void setupPolarizationItem(QENamelist nmlSystem, SpinCorrector corrector) {
         if (this.polarizCombo == null) {
             return;
         }
 
+        QEValueBuffer nspinValue = nmlSystem.getValueBuffer("!nspin");
+
         this.polarizCombo.getItems().clear();
-        QEFXComboInteger item = new QEFXComboInteger(nmlSystem.getValueBuffer("!nspin"), this.polarizCombo);
+        QEFXComboInteger item = new QEFXComboInteger(nspinValue, this.polarizCombo);
 
         if (this.polarizLabel != null) {
             item.setLabel(this.polarizLabel);
         }
 
         if (this.polarizButton != null) {
-            item.setDefault(1, this.polarizButton);
+            item.setDefault(() -> {
+                SpinType spinType = corrector.isAvailable() ? corrector.getSpinType() : null;
+                if (spinType == SpinType.NON_POLARIZED) {
+                    return QEValueBase.getInstance("!nspin", 1);
+
+                } else if (spinType == SpinType.COLINEAR) {
+                    return QEValueBase.getInstance("!nspin", 2);
+
+                } else if (spinType == SpinType.NON_COLINEAR) {
+                    return QEValueBase.getInstance("!nspin", 4);
+
+                } else {
+                    return QEValueBase.getInstance("!nspin", 1);
+                }
+
+            }, this.polarizButton);
         }
 
         item.addItems(TEXT_NON_POLARIZED, TEXT_COLLINEAR, TEXT_NON_COLLINEAR);
@@ -202,9 +240,26 @@ public class QEFXMagnetizController extends QEFXInputController {
 
             return 1;
         });
+
+        item.addWarningCondition((name, value) -> {
+            if ("!nspin".equalsIgnoreCase(name)) {
+                if (corrector.isAvailable() && corrector.getSpinType() == SpinType.NON_COLINEAR) {
+                    if ((!nspinValue.hasValue()) || (nspinValue.getIntegerValue() != 4)) {
+                        return WarningCondition.ERROR;
+                    }
+                }
+                return WarningCondition.OK;
+            }
+
+            return WarningCondition.OK;
+        });
+
+        item.pullAllTriggers();
+
+        this.polarizItem = item;
     }
 
-    private void setupSpinOrbitItem(QENamelist nmlSystem) {
+    private void setupSpinOrbitItem(QENamelist nmlSystem, SpinCorrector corrector) {
         if (this.spinorbitToggle == null) {
             return;
         }
@@ -251,6 +306,13 @@ public class QEFXMagnetizController extends QEFXInputController {
                         return WarningCondition.ERROR;
                     }
                 }
+
+                if (corrector.isAvailable() && corrector.getSpinType() == SpinType.NON_COLINEAR) {
+                    if ((!spinorbValue.hasValue()) || (!spinorbValue.getLogicalValue())) {
+                        return WarningCondition.ERROR;
+                    }
+                }
+
                 return WarningCondition.OK;
             }
 
@@ -258,6 +320,8 @@ public class QEFXMagnetizController extends QEFXInputController {
         });
 
         item.pullAllTriggers();
+
+        this.spinorbitItem = item;
     }
 
     private void setupFixingMethodItem(QENamelist nmlSystem) {

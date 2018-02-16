@@ -30,7 +30,7 @@ public class QEFXMagnetiz extends QEFXEditorComponent<QEFXMagnetizController> {
 
     @Override
     public void notifyEditorOpened() {
-        // TODO 自動生成されたメソ�?ド�?�スタ�?
+        this.controller.updateSpinStatus();
     }
 
 }
