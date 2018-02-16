@@ -20,7 +20,6 @@ import burai.atoms.element.ElementUtil;
 import burai.input.QEInput;
 import burai.input.card.QEAtomicPositions;
 import burai.input.card.QEAtomicSpecies;
-import burai.input.card.QECard;
 import burai.input.namelist.QENamelist;
 import burai.input.namelist.QEValue;
 import burai.pseudo.PseudoPotential;
@@ -44,13 +43,9 @@ public class BandCorrector {
 
         this.nmlSystem = this.input.getNamelist(QEInput.NAMELIST_SYSTEM);
 
-        QECard card = null;
+        this.cardSpecies = this.input.getCard(QEAtomicSpecies.class);
 
-        card = this.input.getCard(QEAtomicSpecies.CARD_NAME);
-        this.cardSpecies = (card != null && card instanceof QEAtomicSpecies) ? ((QEAtomicSpecies) card) : null;
-
-        card = this.input.getCard(QEAtomicPositions.CARD_NAME);
-        this.cardPositions = (card != null && card instanceof QEAtomicPositions) ? ((QEAtomicPositions) card) : null;
+        this.cardPositions = this.input.getCard(QEAtomicPositions.class);
     }
 
     public boolean isAvailable() {

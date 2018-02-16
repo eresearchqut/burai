@@ -18,7 +18,6 @@ package burai.input.correcter;
 
 import burai.input.QEInput;
 import burai.input.card.QEAtomicSpecies;
-import burai.input.card.QECard;
 import burai.input.namelist.QENamelist;
 import burai.input.namelist.QEValue;
 import burai.pseudo.PseudoData;
@@ -46,8 +45,7 @@ public class CutoffCorrector {
 
         this.nmlSystem = this.input.getNamelist(QEInput.NAMELIST_SYSTEM);
 
-        QECard card = this.input.getCard(QEAtomicSpecies.CARD_NAME);
-        this.cardSpecies = (card != null && card instanceof QEAtomicSpecies) ? ((QEAtomicSpecies) card) : null;
+        this.cardSpecies = this.input.getCard(QEAtomicSpecies.class);
     }
 
     public boolean isAvailable() {
