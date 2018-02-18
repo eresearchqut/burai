@@ -24,6 +24,28 @@ import java.util.Optional;
 import java.util.Queue;
 import java.util.ResourceBundle;
 
+import burai.app.about.QEFXAboutDialog;
+import burai.app.explorer.QEFXExplorer;
+import burai.app.explorer.QEFXExplorerFacade;
+import burai.app.icon.QEFXFolderIcon;
+import burai.app.icon.QEFXIcon;
+import burai.app.icon.QEFXProjectIcon;
+import burai.app.icon.QEFXWebIcon;
+import burai.app.matapi.QEFXMatAPIDialog;
+import burai.app.onclose.QEFXSavingDialog;
+import burai.app.path.QEFXPathDialog;
+import burai.app.proxy.QEFXProxyDialog;
+import burai.app.ssh.QEFXSSHDialog;
+import burai.app.tab.QEFXTabManager;
+import burai.com.env.Environments;
+import burai.com.graphic.svg.SVGLibrary;
+import burai.com.graphic.svg.SVGLibrary.SVGData;
+import burai.com.keys.KeyNames;
+import burai.com.life.Life;
+import burai.matapi.MaterialsAPILoader;
+import burai.project.Project;
+import burai.run.RunningManager;
+import burai.ver.Version;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -49,27 +71,6 @@ import javafx.scene.web.WebEngine;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import burai.app.about.QEFXAboutDialog;
-import burai.app.explorer.QEFXExplorer;
-import burai.app.explorer.QEFXExplorerFacade;
-import burai.app.icon.QEFXFolderIcon;
-import burai.app.icon.QEFXIcon;
-import burai.app.icon.QEFXProjectIcon;
-import burai.app.icon.QEFXWebIcon;
-import burai.app.matapi.QEFXMatAPIDialog;
-import burai.app.onclose.QEFXSavingDialog;
-import burai.app.path.QEFXPathDialog;
-import burai.app.proxy.QEFXProxyDialog;
-import burai.app.ssh.QEFXSSHDialog;
-import burai.app.tab.QEFXTabManager;
-import burai.com.env.Environments;
-import burai.com.graphic.svg.SVGLibrary;
-import burai.com.graphic.svg.SVGLibrary.SVGData;
-import burai.com.life.Life;
-import burai.matapi.MaterialsAPILoader;
-import burai.project.Project;
-import burai.run.RunningManager;
-import burai.ver.Version;
 
 public class QEFXMainController implements Initializable {
 
@@ -325,6 +326,7 @@ public class QEFXMainController implements Initializable {
         }
 
         if (this.quitMItem != null) {
+            this.quitMItem.setText("Quit [" + KeyNames.getShortcut(KeyCode.Q) + "]");
             this.quitMItem.setOnAction(event -> {
                 this.quitSystem();
             });
