@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ColorPicker?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<ScrollPane prefHeight="750.0" prefWidth="425.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <content>
+      <VBox>
+         <children>
+            <BorderPane prefWidth="395.0">
+               <center>
+                  <Separator prefHeight="30.0" BorderPane.alignment="CENTER" />
+               </center>
+               <left>
+                  <Label styleClass="medium-text" text="Controls" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font name="System Bold Italic" size="14.0" />
+                     </font>
+                     <padding>
+                        <Insets left="10.0" right="10.0" />
+                     </padding>
+                  </Label>
+               </left>
+               <padding>
+                  <Insets top="10.0" />
+               </padding>
+            </BorderPane>
+            <GridPane hgap="5.0" prefWidth="395.0" vgap="5.0">
+               <children>
+                  <Button fx:id="undoButton" mnemonicParsing="false" styleClass="piclight-button" text="\@">
+                     <GridPane.margin>
+                        <Insets left="8.0" />
+                     </GridPane.margin>
+                  </Button>
+                  <Button fx:id="redoButton" mnemonicParsing="false" styleClass="piclight-button" text="\@" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets left="8.0" />
+                     </GridPane.margin>
+                  </Button>
+                  <Button fx:id="centerButton" mnemonicParsing="false" styleClass="piclight-button" text="\@" GridPane.rowIndex="2">
+                     <GridPane.margin>
+                        <Insets left="8.0" />
+                     </GridPane.margin>
+                  </Button>
+                  <Label fx:id="undoLabel" text="Undo [Shortcut+Z]" GridPane.columnIndex="1" />
+                  <Label fx:id="redoLabel" text="Redo [Shortcut+Shift+Z]" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label fx:id="centerLabel" text="Centering [Shortcut+C]" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+               </children>
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" prefWidth="50.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" prefWidth="330.0" />
+               </columnConstraints>
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+            </GridPane>
+            <BorderPane prefWidth="395.0">
+               <center>
+                  <Separator prefHeight="30.0" BorderPane.alignment="CENTER" />
+               </center>
+               <left>
+                  <Label styleClass="medium-text" text="System" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font name="System Bold Italic" size="14.0" />
+                     </font>
+                     <padding>
+                        <Insets left="10.0" right="10.0" />
+                     </padding>
+                  </Label>
+               </left>
+               <padding>
+                  <Insets top="10.0" />
+               </padding>
+            </BorderPane>
+            <GridPane hgap="5.0" prefWidth="395.0" vgap="5.0">
+                <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" prefWidth="120.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" prefWidth="205.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" prefWidth="50.0" />
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                </rowConstraints>
+                <children>
+                    <Label text="Atomic Model" />
+                  <Label text="Background" GridPane.rowIndex="1" />
+                    <Label text="Font Color" GridPane.rowIndex="2" />
+                    <Label text="Show Legend ?" GridPane.rowIndex="3" />
+                  <Label text="Show Axis ?" GridPane.rowIndex="4" />
+                  <ComboBox fx:id="styleCombo" prefWidth="200.0" GridPane.columnIndex="1" />
+                  <ColorPicker fx:id="backColorPicker" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <ColorPicker fx:id="fontColorPicker" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                    <ToggleButton fx:id="legendToggle" mnemonicParsing="false" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                    <ToggleButton fx:id="axisToggle" mnemonicParsing="false" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                    <Button fx:id="styleButton" mnemonicParsing="false" text="\@" GridPane.columnIndex="2" />
+                  <Button fx:id="backColorButton" mnemonicParsing="false" text="\@" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                    <Button fx:id="fontColorButton" mnemonicParsing="false" text="\@" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                    <Button fx:id="legendButton" mnemonicParsing="false" text="\@" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                  <Button fx:id="axisButton" mnemonicParsing="false" text="\@" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                </children>
+                <padding>
+                    <Insets left="10.0" />
+                </padding>
+            </GridPane>
+            <BorderPane prefWidth="395.0">
+               <center>
+                  <Separator prefHeight="30.0" BorderPane.alignment="CENTER" />
+               </center>
+               <left>
+                  <Label styleClass="medium-text" text="Atoms" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font name="System Bold Italic" size="14.0" />
+                     </font>
+                     <padding>
+                        <Insets left="10.0" right="10.0" />
+                     </padding>
+                  </Label>
+               </left>
+               <padding>
+                  <Insets top="10.0" />
+               </padding>
+            </BorderPane>
+            <GridPane hgap="5.0" prefWidth="395.0" vgap="5.0">
+               <children>
+                  <Label text="Select Element" />
+                  <Label fx:id="atomColorLabel" text="Atomic Color" GridPane.rowIndex="1" />
+                  <Label fx:id="atomRadiusLabel" text="Atomic Radius" GridPane.rowIndex="2" />
+                  <Button fx:id="elemButton" mnemonicParsing="false" prefWidth="200.0" styleClass="element-button" text="no element" GridPane.columnIndex="1" />
+                  <ColorPicker fx:id="atomColorPicker" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <GridPane prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <children>
+                        <TextField fx:id="atomRadiusField" prefWidth="137.0">
+                           <GridPane.margin>
+                              <Insets right="3.0" />
+                           </GridPane.margin></TextField>
+                        <Button fx:id="atomRadiusUpper" mnemonicParsing="false" text="\@" GridPane.columnIndex="1" />
+                        <Button fx:id="atomRadiusLower" mnemonicParsing="false" text="\@" GridPane.columnIndex="2" />
+                     </children>
+                     <columnConstraints>
+                        <ColumnConstraints prefWidth="140.0" />
+                        <ColumnConstraints prefWidth="30.0" />
+                        <ColumnConstraints prefWidth="30.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <Button fx:id="atomColorButton" mnemonicParsing="false" text="\@" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Button fx:id="atomRadiusButton" mnemonicParsing="false" text="\@" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+               </children>
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" prefWidth="120.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" prefWidth="205.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" prefWidth="50.0" />
+               </columnConstraints>
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+            </GridPane>
+            <BorderPane prefWidth="395.0">
+               <center>
+                  <Separator prefHeight="30.0" BorderPane.alignment="CENTER" />
+               </center>
+               <left>
+                  <Label styleClass="medium-text" text="Bonds" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font name="System Bold Italic" size="14.0" />
+                     </font>
+                     <padding>
+                        <Insets left="10.0" right="10.0" />
+                     </padding>
+                  </Label>
+               </left>
+               <padding>
+                  <Insets top="10.0" />
+               </padding>
+            </BorderPane>
+            <GridPane hgap="5.0" prefWidth="395.0" vgap="5.0">
+               <children>
+                  <Label fx:id="bondWidthLabel" text="Bond Width" />
+                  <GridPane prefWidth="200.0" GridPane.columnIndex="1">
+                     <children>
+                        <TextField fx:id="bondWidthField" prefWidth="137.0">
+                           <GridPane.margin>
+                              <Insets right="3.0" />
+                           </GridPane.margin></TextField>
+                        <Button fx:id="bondWidthUpper" mnemonicParsing="false" text="\@" GridPane.columnIndex="1" />
+                        <Button fx:id="bondWidthLower" mnemonicParsing="false" text="\@" GridPane.columnIndex="2" />
+                     </children>
+                     <columnConstraints>
+                        <ColumnConstraints prefWidth="140.0" />
+                        <ColumnConstraints prefWidth="30.0" />
+                        <ColumnConstraints prefWidth="30.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                  </GridPane>
+                  <Button fx:id="bondWidthButton" mnemonicParsing="false" text="\@" GridPane.columnIndex="2" />
+               </children>
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" prefWidth="120.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" prefWidth="205.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" prefWidth="50.0" />
+               </columnConstraints>
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+            </GridPane>
+            <BorderPane prefWidth="395.0">
+               <center>
+                  <Separator prefHeight="30.0" BorderPane.alignment="CENTER" />
+               </center>
+               <left>
+                  <Label styleClass="medium-text" text="Cell" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font name="System Bold Italic" size="14.0" />
+                     </font>
+                     <padding>
+                        <Insets left="10.0" right="10.0" />
+                     </padding>
+                  </Label>
+               </left>
+               <padding>
+                  <Insets top="10.0" />
+               </padding>
+            </BorderPane>
+            <GridPane hgap="5.0" prefWidth="395.0" vgap="5.0">
+               <children>
+                  <Label text="Show Cell ?" />
+                  <Label fx:id="cellColorLabel" text="Cell Color" GridPane.rowIndex="1" />
+                  <Label fx:id="cellWidthLabel" text="Cell Width" GridPane.rowIndex="2" />
+                  <ToggleButton fx:id="cellToggle" mnemonicParsing="false" prefWidth="200.0" GridPane.columnIndex="1" />
+                  <ColorPicker fx:id="cellColorPicker" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <GridPane prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <children>
+                        <TextField fx:id="cellWidthField" prefWidth="137.0">
+                           <GridPane.margin>
+                              <Insets right="3.0" />
+                           </GridPane.margin></TextField>
+                        <Button fx:id="cellWidthUpper" mnemonicParsing="false" text="\@" GridPane.columnIndex="1" />
+                        <Button fx:id="cellWidthLower" mnemonicParsing="false" text="\@" GridPane.columnIndex="2" />
+                     </children>
+                     <columnConstraints>
+                        <ColumnConstraints prefWidth="140.0" />
+                        <ColumnConstraints prefWidth="30.0" />
+                        <ColumnConstraints prefWidth="30.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <Button fx:id="cellButton" mnemonicParsing="false" text="\@" GridPane.columnIndex="2" />
+                  <Button fx:id="cellColorButton" mnemonicParsing="false" text="\@" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Button fx:id="cellWidthButton" mnemonicParsing="false" text="\@" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+               </children>
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" prefWidth="120.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" prefWidth="205.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" prefWidth="50.0" />
+               </columnConstraints>
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+            </GridPane>
+            <BorderPane prefWidth="395.0">
+               <center>
+                  <Separator prefHeight="30.0" BorderPane.alignment="CENTER" />
+               </center>
+               <padding>
+                  <Insets top="10.0" />
+               </padding>
+            </BorderPane>
+         </children>
+      </VBox>
+   </content>
+</ScrollPane>

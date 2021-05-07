@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <Group>
+         <children>
+            <BorderPane prefWidth="520.0" BorderPane.alignment="CENTER">
+               <center>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="logo-text" text="BURAI 1.3" BorderPane.alignment="CENTER" />
+               </center>
+               <bottom>
+                  <Label style="-fx-font-family: monospace;" text="Copyright (C) 2016-2018 BURAI-team &lt;nisihara.burai@gmail.com&gt;." BorderPane.alignment="CENTER">
+                     <BorderPane.margin>
+                        <Insets top="12.0" />
+                     </BorderPane.margin>
+                  </Label>
+               </bottom>
+            </BorderPane>
+         </children>
+      </Group>
+   </center>
+   <left>
+      <StackPane prefHeight="160.0" prefWidth="160.0">
+         <children>
+            <ImageView fx:id="imageView" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+         </children>
+      </StackPane>
+   </left>
+   <bottom>
+      <VBox BorderPane.alignment="CENTER">
+         <children>
+            <Separator>
+               <padding>
+                  <Insets bottom="5.0" />
+               </padding>
+            </Separator>
+            <TextArea fx:id="textArea" editable="false" focusTraversable="false" prefHeight="175.0" style="-fx-font-family: monospaced;" wrapText="true" />
+         </children>
+      </VBox>
+   </bottom>
+</BorderPane>

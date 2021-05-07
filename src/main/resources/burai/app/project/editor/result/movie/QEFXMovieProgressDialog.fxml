@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.web.*?>
+<?import javafx.scene.media.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <left>
+      <StackPane prefHeight="130.0" prefWidth="130.0" style="-fx-background-color: transparent;" BorderPane.alignment="CENTER">
+         <children>
+            <AnchorPane style="-fx-background-color: transparent;">
+               <children>
+                  <ProgressIndicator fx:id="progressIndicator" focusTraversable="false" prefHeight="80.0" prefWidth="80.0" progress="0.0" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="25.0" />
+               </children>
+            </AnchorPane>
+         </children></StackPane>
+   </left>
+   <center>
+      <HBox BorderPane.alignment="CENTER">
+         <children>
+            <Separator orientation="VERTICAL" />
+            <BorderPane prefHeight="130.0" prefWidth="400.0" style="-fx-background-color: transparent;">
+               <center>
+                  <Label fx:id="progressLabel" style="-fx-font-size: 1.083333em;" text="Creating a movie file: " wrapText="true" BorderPane.alignment="CENTER" />
+               </center>
+               <bottom>
+                  <Button fx:id="stopButton" mnemonicParsing="false" text="Stop to create a movie" BorderPane.alignment="CENTER" />
+               </bottom>
+            </BorderPane>
+         </children>
+      </HBox>
+   </center>
+</BorderPane>
