@@ -7,3 +7,5 @@
 /bin/*.jar
 /bin/*.exe
 /docs/build
+.idea
+burai.iml

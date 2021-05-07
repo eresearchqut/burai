@@ -1,10 +1,32 @@
 This is the BURAI software package,
 which is a GUI system of Quantum ESPRESSO <http://www.quantum-espresso.org>.
 
-Copyright (C) 2016-2018 BURAI-team <nisihara.burai@gmail.com>.
+Copyright (C) 2016-2020 BURAI-team <nisihara.burai@gmail.com>.
 
-This system is developed as a JavaFX application, and requires JRE1.8
-or later version of runtime environment.
+This system is developed as a JavaFX
+
+Fork
+
+This fork aims to add support for building with modern Java (16) and Maven (3.8). The source structures have been migrated
+to the standard maven layout.
+
+Dependencies
+
+* Java 16
+* Maven 3.8
+
+Build
+
+```
+mvn clean install
+```
+
+Run
+
+```
+mvn javafx:run
+```
+
 
 The following external libraries are used.
   - exp4j  (Apache License 2.0, http://www.objecthunter.net/exp4j/)
